@@ -33,8 +33,8 @@ class Jobneed_DAO{
         this.plandatetime = newDate;
     }
 
-    // Convert a Note object into a Map object
-    Map<String, dynamic> toMap() {
+    // Convert a Note   object into a Map object
+    Map<String,  dynamic> toMap() {
 
         var map = Map<String, dynamic>();
         if (id != null) {
@@ -42,7 +42,8 @@ class Jobneed_DAO{
         }
         map['title'] = jobneedid;
         map['jobdesc'] = jobdesc;
-        map['date'] = plandatetime;
+        map['date'] = plandatetime
+        ;
 
         return map;
     }
