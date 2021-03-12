@@ -1,0 +1,68 @@
+import 'package:sqflite/sqflite.dart';
+
+class AttendanceSheet_Table {
+    final String TABLE_NAME = "AttendanceSheet";
+
+    final String ATTENDANCESHEET_PEOPLE_ID = "peopleid";
+    final String ATTENDANCESHEET_PEOPLE_NAME = "peoplename";
+    final String ATTENDANCESHEET_PEOPLE_LOGINID = "peopleLoginId";
+    final String ATTENDANCESHEET_MDTZ = "mdtz";
+    final String ATTENDANCESHEET_CDTZ = "cdtz";
+    final String ATTENDANCESHEET_MUSER = "muser";
+    final String ATTENDANCESHEET_CUSER = "cuser";
+    final String ATTENDANCESHEET_ABSENT_OR_PRESNT = "absentOrPresent";
+    final String ATTENDANCESHEET_DATES = "attendanceDates";
+    final String ATTENDANCESHEET_SYNC_STATUS = "syncStatus";
+    final String ATTENDANCESHEET_APPROVAL_STATUS = "approvalStatus";
+    final String ATTENDANCESHEET_MONTH = "attendanceMonth";
+    final String ATTENDANCESHEET_SITEID = "siteid";
+
+    // final String ATTENDANCESHEET_PRESENT_DAYS="attendanceDates";
+    final String ATTENDANCESHEET_WEEKLYOFF_DAYS = "weeklyOffDays";
+    final String ATTENDANCESHEET_NATIONAL_HOLIDAY = "nationalHoliday";
+    final String ATTENDANCESHEET_EXTRA_DUTY = "extraDuty";
+
+    final String ATTENDANCESHEET_PRESENT_DAYS_COUNT = "presentDaysCount";
+    final String ATTENDANCESHEET_WEEKLYOFF_DAYS_COUNT = "weeklyOffDaysCount";
+    final String ATTENDANCESHEET_NATIONAL_HOLIDAY_COUNTS = "nationalHolidayCount";
+    final String ATTENDANCESHEET_EXTRA_DUTY_COUNT = "extraDutyCount";
+
+    final String ATTENDANCESHEET_REMARK = "remark";
+
+    final String ATTENDANCESHEET_TOTAL_PD_WO = "totalCount1";
+    final String ATTENDANCESHEET_TOTAL_PD_WO_ED_NH = "totalCount2";
+
+    final String TEXT_TYPE = "text";
+    final String INT_TYPE = "Integer";
+    final String ID_TYPE = "INTEGER PRIMARY KEY AUTOINCREMENT";
+
+    OnCreate(Database db) async {
+        await db.execute('''
+          CREATE TABLE $TABLE_NAME (
+            $ATTENDANCESHEET_PEOPLE_ID INTEGER NOT NULL,
+            $ATTENDANCESHEET_PEOPLE_NAME TEXT NOT NULL,
+            $ATTENDANCESHEET_PEOPLE_LOGINID TEXT NOT NULL,
+            $ATTENDANCESHEET_MDTZ TEXT NOT NULL,
+            $ATTENDANCESHEET_CDTZ TEXT NOT NULL,
+            $ATTENDANCESHEET_MUSER INTEGER NOT NULL,
+            $ATTENDANCESHEET_CUSER INTEGER NOT NULL,
+            $ATTENDANCESHEET_ABSENT_OR_PRESNT INTEGER NOT NULL,
+            $ATTENDANCESHEET_DATES TEXT NOT NULL,
+            $ATTENDANCESHEET_SYNC_STATUS INTEGER NOT NULL,
+            $ATTENDANCESHEET_APPROVAL_STATUS INTEGER NOT NULL,
+            $ATTENDANCESHEET_MONTH TEXT NOT NULL,
+            $ATTENDANCESHEET_PRESENT_DAYS_COUNT INTEGER NOT NULL,
+            $ATTENDANCESHEET_WEEKLYOFF_DAYS_COUNT INTEGER NOT NULL,
+            $ATTENDANCESHEET_NATIONAL_HOLIDAY_COUNTS INTEGER NOT NULL,
+            $ATTENDANCESHEET_EXTRA_DUTY_COUNT INTEGER NOT NULL,
+            $ATTENDANCESHEET_WEEKLYOFF_DAYS TEXT NOT NULL,
+            $ATTENDANCESHEET_NATIONAL_HOLIDAY TEXT NOT NULL,
+            $ATTENDANCESHEET_EXTRA_DUTY TEXT NOT NULL,
+            $ATTENDANCESHEET_TOTAL_PD_WO INTEGER NOT NULL,
+            $ATTENDANCESHEET_TOTAL_PD_WO_ED_NH INTEGER NOT NULL,
+            $ATTENDANCESHEET_REMARK TEXT NOT NULL,
+            $ATTENDANCESHEET_SITEID INTEGER NOT NULL
+          )
+          ''');
+    }
+}
