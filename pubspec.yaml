@@ -27,9 +27,10 @@ dependencies:
   http:
   shared_preferences:
   sqflite: ^1.3.0
-  path_provider:
+  path_provider: ^1.5.1
   swipeable_page_route: ^0.1.6
-  qr_code_scanner:
+  fluttertoast:
+  qrscan: ^0.2.22
 
 
 

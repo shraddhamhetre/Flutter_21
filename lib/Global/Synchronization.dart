@@ -108,6 +108,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
         getresponse(userdata, "Jobneed");
         //gettypeassistmodifiedafter();
         //getjndmodifiedafter();
+        getquestionsmodifiedafter();
     }
 
     gettypeassistmodifiedafter()async{
@@ -184,7 +185,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
         print( userData.toJson( ) );
         print( "========================" );
         getresponse(userdata, "Question");
-        getquestionsetmodifiedafter();
+        //getquestionsetmodifiedafter();
     }
 
     getquestionsetmodifiedafter()async{
@@ -451,20 +452,6 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
                 }
 
 
-                /*String ColFinal = colRecord.toString().replaceAll("[,", "(").replaceAll("]", ")");
-            String RowFinal = record.toString().replaceAll("[,", "(").replaceAll("]", ")");*/
-                //await dbHelper.insert("AssetDetails", test);
-
-
-                //CreateTable();
-                //print("Format Sql== : " + "INSERT Into Clients $ColFinal"" VALUES ${RowFinal}");
-
-                /*String finalSQL ="INSERT Into AssetDetails $ColFinal"
-                " VALUES ${RowFinal.toString()}";
-
-            final id = await dbHelper.insert1("AssetDetails", finalSQL );
-            print('inserted row id: $id');*/
-
                 if(tablename == 'Jobneed'){
                     print("jobneedid:  =="+ test["jobneedid"]);
                     test["isdeleted"] = false;
@@ -504,7 +491,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
                         await dbHelper.insert(tablename, test);
 
                         break;
-                    case 'question':
+                    case 'Question':
                     //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["questionid"]).set(test);
                         await dbHelper.insert(tablename, test);
 
@@ -556,12 +543,11 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
 
             ss=jid.toString().substring(0,(jid.toString().length-1));
             print("ss: "+ss);
-            getjndmodifiedafter(ss);
+            //getjndmodifiedafter(ss);
         }
-
-        print("count ==: "+tablename);
         var count= await dbHelper.queryRowCount(tablename);
-        print(count);
+
+        print("count ==: "+tablename + count.toString());
 
         print("2: End of Tablename : "+ tablename);
         //updateListView();
@@ -810,10 +796,11 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
                                                 icon: new Icon(Icons.more_vert, color: Colors.yellow,
                                                     size: 20,),
                                                 highlightColor: Colors.pink,
-                                                onPressed:()=> Navigator.push(
-                                                    mContext ,
-                                                    MaterialPageRoute( builder: ( context ) => QRViewExample()) ,
-                                                ),
+                                                onPressed:(){
+                                                    Navigator.of(context).push<void>(SwipeablePageRoute(
+                                                        builder: (_) => get_QuestionsTask(),
+                                                    ));
+                                                }
                                             ),
 
                                             trailing: Icon(Icons.arrow_forward_ios,
@@ -821,7 +808,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
                                                 size: 20,),
 
                                             title: Text(
-                                                /*"Task Name: " +*/ this.JobneedList[position].plandatetime.toString(),
+                                                /*"Task Name: " +*/ this.JobneedList[position].peopleid.toString(),
                                                 style: TextStyle(color: Colors.white.withOpacity(1.0)),
                                             ),
                                         ),
@@ -842,7 +829,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
     Future updateListView() {
 
         print("updateListView called: -----");
-            Future<List<Jobneed_DAO>> todoListFuture = dbHelper.getTodoList("Jobneed");
+            Future<List<Jobneed_DAO>> todoListFuture = dbHelper.getTaskList("Jobneed");
             todoListFuture.then((JobneedList) {
                 setState(() {
                     this.JobneedList = JobneedList;
@@ -865,9 +852,7 @@ class UserData {
     String password;
     String tzoffset;
     String deviceid;
-
     //UserData({this.deviceid:"358188079376258",this.loginid="shraddham", this.password:"sps123", this.servicename:"Login", this.sitecode:"YTPLD.YTHO",this.story:"1"});
-
     Map toJson() => {"servicename":servicename, "query":query, "story":story, "info":info, "sitecode":sitecode, "loginid":loginid, "password":password, "tzoffset":tzoffset, "deviceid":deviceid};
 }
 
