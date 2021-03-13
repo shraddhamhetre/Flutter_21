@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:intelliwiz21/Activities/ScanQr.dart';
 import 'package:intelliwiz21/Models/Jobneed_DAO.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -243,7 +244,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
         getassetaddress();
     }
 
-    getjndmodifiedafter()async{
+    getjndmodifiedafter(ss)async{
         print("getjndmodifiedafter==================");
         prefs = await SharedPreferences.getInstance();
 
@@ -258,8 +259,8 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
         userData.story = "1";
         print( userData.toJson( ) );
         print( "========================" );
-        getresponse(userdata, "jnd");
-        get_siteslist();
+        getresponse(userdata, "JOBNeedDetails");
+        //get_siteslist();
 
     }
 
@@ -465,6 +466,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
             print('inserted row id: $id');*/
 
                 if(tablename == 'Jobneed'){
+                    print("jobneedid:  =="+ test["jobneedid"]);
                     test["isdeleted"] = false;
                     test["syncStatus"] = 0;
                     jid.write(test["jobneedid"] + ",");
@@ -542,52 +544,44 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
 
 
 
-        /*print("==================Count" + dbHelper.queryRowCount());
+        //print("==================Count" + dbHelper.queryRowCount());
         print(json.encode(test));
-        print( JobneedArray );
-        print("==================jid");
+        //print( JobneedArray );
+        print("1: jndid =" + tablename);
         //String result = utf8.decode(JobneedArray);
-        if(tablename == 'jobneed'){
-            //print(jid.toString().substring(0,(jid.toString().length-1)));
+        if(tablename == 'Jobneed'){
+            print("2: jndid =" + tablename);
+
+            print(jid.toString().substring(0,(jid.toString().length-1)));
 
             ss=jid.toString().substring(0,(jid.toString().length-1));
             print("ss: "+ss);
-            getjndmodifiedafter();
-        }*/
+            getjndmodifiedafter(ss);
+        }
 
         print("count ==: "+tablename);
         var count= await dbHelper.queryRowCount(tablename);
         print(count);
 
         print("2: End of Tablename : "+ tablename);
+        //updateListView();
+
 
     }
 
 
-   /* @override
-    void initState ( ) {
-        super.initState( );
-        print( "getdata not called" );
-        this.getgetassetdetails( );
-
-        print( "getdata called" );
-    }*/
-
-    /*CreateTable() async {
-        DatabaseHelper._privateConstructor();
-        static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
-        Database db = await instance.database;
-
-       *//* final id = await dbHelper.insert("AssetDetails", test);
-        print('inserted row id: $id');*//*
-    }*/
 
 
     @override
     Widget build(BuildContext context) {
         if (JobneedList == null) {
+            print(" 1: get jobneed list" );
             JobneedList = List<Jobneed_DAO>();
             //updateListView();
+            //getjobneedmodifiedafter();
+        }else{
+            //updateListView();
+
         }
         return Scaffold(
             appBar: MorphingAppBar(
@@ -798,15 +792,13 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
                 child: Container(
                     color: Color(0xff404040),
                     child: FutureBuilder<List>(
-                        future: dbHelper.getAllRecords("Jobneed"),
+                        future: updateListView(),
                         initialData: List(),
                         builder: (context, snapshot) {
                             return snapshot.hasData
                                 ? ListView.builder(
-                                itemCount: snapshot.data.length,
+                                itemCount: JobneedList.length,
                                 itemBuilder: (_, int position) {
-                                    final item = snapshot.data[position];
-                                    //get your item data here ...
                                     return Card(
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(15.0),
@@ -814,15 +806,22 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
 
                                         child: ListTile(
                                             tileColor: Color(0xff514e4e),
-                                            leading: Icon(Icons.more_vert,
-                                                color: Colors.yellow,
-                                                size: 20,),
+                                            leading:new IconButton(
+                                                icon: new Icon(Icons.more_vert, color: Colors.yellow,
+                                                    size: 20,),
+                                                highlightColor: Colors.pink,
+                                                onPressed:()=> Navigator.push(
+                                                    mContext ,
+                                                    MaterialPageRoute( builder: ( context ) => QRViewExample()) ,
+                                                ),
+                                            ),
+
                                             trailing: Icon(Icons.arrow_forward_ios,
                                                 color: Colors.white,
                                                 size: 20,),
 
                                             title: Text(
-                                                /*"Task Name: " +*/ snapshot.data[position].row[2],
+                                                /*"Task Name: " +*/ this.JobneedList[position].plandatetime.toString(),
                                                 style: TextStyle(color: Colors.white.withOpacity(1.0)),
                                             ),
                                         ),
@@ -840,14 +839,14 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin{
         );
     }
 
-    void updateListView() {
+    Future updateListView() {
 
         print("updateListView called: -----");
-            Future<List<Jobneed_DAO>> todoListFuture = dbHelper.getAllRecords("Jobneed");
-            todoListFuture.then((todoList1) {
+            Future<List<Jobneed_DAO>> todoListFuture = dbHelper.getTodoList("Jobneed");
+            todoListFuture.then((JobneedList) {
                 setState(() {
-                    this.JobneedList = todoList1;
-                    this.count = todoList1.length;
+                    this.JobneedList = JobneedList;
+                    this.count = JobneedList.length;
                 });
             });
 

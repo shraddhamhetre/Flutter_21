@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:intelliwiz21/Models/Jobneed_DAO.dart';
 import 'package:intelliwiz21/Tables/AssetDetail_Table.dart';
 import 'package:intelliwiz21/Tables/AssignedSitePeople_Table.dart';
 import 'package:intelliwiz21/Tables/Geofence_Table.dart';
@@ -166,6 +167,35 @@ class DatabaseHelper {
         print("Result list : "+ result.length.toString());
 
         return result.toList();
+    }
+
+    Future<List<Map<String, dynamic>>> getTodoMapList(String dbTable) async {
+        Database db = await this.database;
+        var result = await db.rawQuery("SELECT * FROM $dbTable");
+
+//		var result = await db.rawQuery('SELECT * FROM $todoTable order by $colTitle ASC');
+        //var result = await db.query(todoTable, orderBy: '$colTitle ASC');
+        return result;
+    }
+
+    Future<List<Jobneed_DAO>> getTodoList(String dbTable) async {
+
+        var todoMapList = await getTodoMapList(dbTable); // Get 'Map List' from database
+        int count = todoMapList.length;
+
+        print("getTodoList length: "+ count.toString());
+
+        List<Jobneed_DAO> JobneedList = List<Jobneed_DAO>();
+        // For loop to create a 'todo List' from a 'Map List'
+        for (int i = 0; i < count; i++) {
+
+            JobneedList.add(Jobneed_DAO.fromMapObject(todoMapList[i]));
+        }
+
+        print("JobneedList length: "+ JobneedList.length.toString());
+
+
+        return JobneedList;
     }
 
     // Deletes the row specified by the id. The number of affected rows is
