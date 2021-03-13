@@ -1,36 +1,34 @@
 class Jobneed_DAO{
 
     int _id;
-    String jobneedid;
-    String jobdesc;
-    String plandatetime;
+    int _jobneedid;
+    String _jobdesc;
+    String _plandatetime;
 
-    Jobneed_DAO(this.jobneedid, this.plandatetime, [this.jobdesc] );
+    Jobneed_DAO(this._jobneedid, this._plandatetime, [this._jobdesc] );
 
-    Jobneed_DAO.withId(this._id, this.jobneedid, this.plandatetime, [this.jobdesc]);
+    Jobneed_DAO.withId(this._id, this._jobneedid, this._plandatetime, [this._jobdesc]);
 
     int get id => _id;
 
-    String get title => jobneedid;
+    int get jobneedid => _jobneedid;
 
-    String get jobdesc1 => jobdesc;
+    String get jobdesc => _jobdesc;
 
-    String get date => plandatetime;
+    String get plandatetime => _plandatetime;
 
 
-    set title(String newTitle) {
-        if (newTitle.length <= 255) {
-            this.jobneedid = newTitle;
-        }
+    set jobneedid(int newjobneedid) {
+            this._jobneedid = newjobneedid;
     }
-    set jobdesc1(String newjobdesc) {
+    set jobdesc(String newjobdesc) {
         if (newjobdesc.length <= 255) {
-            this.jobdesc = newjobdesc;
+            this._jobdesc = newjobdesc;
         }
     }
 
-    set date(String newDate) {
-        this.plandatetime = newDate;
+    set plandatetime(String newDate) {
+        this._plandatetime = newDate;
     }
 
     // Convert a Note   object into a Map object
@@ -40,9 +38,9 @@ class Jobneed_DAO{
         if (id != null) {
             map['id'] = _id;
         }
-        map['title'] = jobneedid;
-        map['jobdesc'] = jobdesc;
-        map['date'] = plandatetime
+        map['jobneedid'] = _jobneedid;
+        map['jobdesc'] = _jobdesc;
+        map['plandatetime'] = _plandatetime
         ;
 
         return map;
@@ -51,8 +49,8 @@ class Jobneed_DAO{
     // Extract a Note object from a Map object
     Jobneed_DAO.fromMapObject(Map<String, dynamic> map) {
         this._id = map['id'];
-        this.jobneedid = map['title'];
-        this.jobdesc = map['jobdesc'];
-        this.plandatetime = map['date'];
+        this._jobneedid = map['jobneedid'];
+        this._jobdesc = map['jobdesc'];
+        this._plandatetime = map['plandatetime'];
     }
 }
