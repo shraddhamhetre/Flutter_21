@@ -2,9 +2,9 @@ class Question_DAO {
   int _id;
   int _questionid;
   String _questionname;
-  String _type;
+  int _type;
   String _options;
-  String _unit;
+  int _unit;
   String _Min;
   String _Max;
   String _alertOn;
@@ -48,9 +48,9 @@ class Question_DAO {
   int get id => _id;
   int get questionid => _questionid;
   String get questionname => _questionname;
-  String get type => _type;
+  int get type => _type;
   String get options => _options;
-  String get unit => _unit;
+  int get unit => _unit;
   String get Min => _Min;
   String get Max => _Max;
   String get alertOn => _alertOn;
@@ -68,7 +68,7 @@ class Question_DAO {
     this._questionname = newquestionname;
   }
 
-  set type(String newtype) {
+  set type(int newtype) {
     this._type = newtype;
   }
 
@@ -76,7 +76,7 @@ class Question_DAO {
     this._options = newoptions;
   }
 
-  set unit(String newunit) {
+  set unit(int newunit) {
     this._unit = newunit;
   }
 

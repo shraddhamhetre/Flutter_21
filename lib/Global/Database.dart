@@ -185,7 +185,7 @@ class DatabaseHelper {
         var todoMapList = await getTodoMapList(dbTable); // Get 'Map List' from database
         int count = todoMapList.length;
 
-        print("getTodoList length: "+ count.toString());
+        //print("getTodoList length: "+ count.toString());
 
         List<Jobneed_DAO> JobneedList = List<Jobneed_DAO>();
         // For loop to create a 'todo List' from a 'Map List'
@@ -193,7 +193,7 @@ class DatabaseHelper {
 
             JobneedList.add(Jobneed_DAO.fromMapObject(todoMapList[i]));
         }
-        print("JobneedList length: "+ JobneedList.length.toString());
+        //print("JobneedList length: "+ JobneedList.length.toString());
         return JobneedList;
     }
 

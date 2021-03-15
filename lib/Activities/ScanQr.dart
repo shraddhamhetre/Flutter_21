@@ -210,7 +210,7 @@ print("qname:===="+a.questionname);
                                                         size: 20,),
 
                                                     title: Text(
-                                                        /*"Task Name: " +*/ this.QuestionList[position].questionid.toString(),
+                                                        /*"Task Name: " +*/ this.QuestionList[position].questionname.toString(),
                                                         style: TextStyle(color: Colors.white.withOpacity(1.0)),
                                                     ),
                                                 ),
@@ -231,7 +231,7 @@ print("qname:===="+a.questionname);
 
     Future updateListView() {
 
-        print("updateListView called: -----");
+        print("updateListView called: -----questionList");
         Future<List<Question_DAO>> todoListFuture = dbHelper.getquestionList("Question");
         todoListFuture.then((QuestionList) {
             setState(() {
@@ -240,7 +240,7 @@ print("qname:===="+a.questionname);
             });
         });
 
-        print("updateListView end::::"+ count.toString());
+        print("updateListView end:::: question"+ count.toString());
     }
     }
 

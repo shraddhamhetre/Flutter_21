@@ -6,7 +6,7 @@ class Question_Table {
     final String QUESTION_ID = "questionid";
     final String QUESTION_NAME = "questionname";
     final String QUESTION_TYPE = "type";
-    final String QUESTION_OPTIONS = "options";
+    final String QUESTION_OPTIONS = "option";
     final String QUESTION_UNIT = "unit";
     final String QUESTION_MIN = "min";
     final String QUESTION_MAX = "max";
