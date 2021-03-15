@@ -16,7 +16,7 @@ class QuestionSet_Table {
     final String QUESTION_SET_PARENT = "parent";
     final String QUESTION_SET_TYPE = "type";
     final String QUESTION_SET_BUID = "buid";
-    final String QUESTION_SET_URL = "url";
+    //final String QUESTION_SET_URL = "url";
 
     final String QUESTION_SET_ASSETINCLUDES = "assetincludes";
     final String QUESTION_SET_BUINCLUDES = "buincludes";
@@ -39,7 +39,6 @@ class QuestionSet_Table {
             $QUESTION_SET_SEQNO INTEGER NOT NULL,
             $QUESTION_SET_PARENT INTEGER NOT NULL,
             $QUESTION_SET_TYPE INTEGER NOT NULL,
-            $QUESTION_SET_URL TEXT NOT NULL,
             $QUESTION_SET_BUID INTEGER NOT NULL
           )
           ''');

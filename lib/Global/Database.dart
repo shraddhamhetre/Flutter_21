@@ -174,7 +174,7 @@ class DatabaseHelper {
         Database db = await this.database;
         var result = await db.rawQuery("SELECT * FROM $dbTable");
 
-        print("getTodoMapList all records------"+dbTable +"="+ result.length.toString());
+        //print("getTodoMapList all records------"+dbTable +"="+ result.length.toString());
 //		var result = await db.rawQuery('SELECT * FROM $todoTable order by $colTitle ASC');
         //var result = await db.query(todoTable, orderBy: '$colTitle ASC');
         return result;
