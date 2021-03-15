@@ -609,13 +609,11 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
       //updateListView();
 
     }
-    return WillPopScope(
-      onWillPop: () {
-        return new Future(() => false);
-      },
+    return new WillPopScope(
+      onWillPop: () async => false,
       child: Scaffold(
         appBar: MorphingAppBar(
-          /*backgroundColor: Color(0xff111727),*/
+          /*backgroundColor: Color(0xff404040),*/
           title: Text(
             'Intelliwiz',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
@@ -638,7 +636,6 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
               labelPadding: EdgeInsets.only(bottom: 15, left: 7.5, right: 7.5),
               controller: _tabController,
               indicatorColor: Colors.white,
-              indicatorWeight: 3,
               isScrollable: true,
               labelStyle: TextStyle(
                   fontSize: 13.0,
@@ -657,11 +654,11 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
         drawerEdgeDragWidth: 10.0,
         drawer: SafeArea(
           child: Drawer(
-            elevation: 0,
+            elevation: 50.0,
             child: ListView(
               children: [
                 Container(
-                  /*color: Color(0xff111727),*/
+                  /*color: Color(0xff404040),*/
                   child: DrawerHeader(
                     child: Image.asset("assets/youtility_logo.png"),
                   ),
@@ -669,143 +666,151 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
                 Container(
                   height: MediaQuery.of(context).size.height,
                   color: Color(0xff1F1F2A),
-                  child: Column(
-                    children: [
-                      Card(
-                        elevation: 0,
-                        /*color: Color(0xff5F6776),*/
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        margin: EdgeInsets.fromLTRB(5, 5, 5, 2),
-                        child: ExpansionTile(
-                          childrenPadding: EdgeInsets.only(left: 30.0),
-                          title: Text(
-                            'Facility',
-                            style: TextStyle(
-                              color: Color(0xffffffff),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 0,
+                          /*color: Color(0xff514e4e),*/
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          margin: EdgeInsets.fromLTRB(5, 5, 5, 2),
+                          shadowColor: Colors.white,
+                          child: ExpansionTile(
+                            /*backgroundColor: Color(0xff514e4e),*/
+                            childrenPadding: EdgeInsets.only(left: 30.0),
+                            title: Text(
+                              'Facility',
+                              style: TextStyle(
+                                color: Color(0xffffffff),
+                              ),
                             ),
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  'Task',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                              ListTile(
+                                title: Text(
+                                  'PPM',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                              ListTile(
+                                title: Text(
+                                  'Asset',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                              ListTile(
+                                title: Text(
+                                  'Ticket',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          children: [
-                            ListTile(
-                              title: Text(
-                                'Task',
-                                style: TextStyle(
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                'PPM',
-                                style: TextStyle(
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                'Asset',
-                                style: TextStyle(
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                'Ticket',
-                                style: TextStyle(
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
-                      ),
-                      Card(
-                        elevation: 0,
-                        /*color: Color(0xff5F6776),*/
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        margin: EdgeInsets.fromLTRB(5, 5, 5, 2),
-                        child: ExpansionTile(
-                          childrenPadding: EdgeInsets.only(left: 30.0),
-                          title: Text(
-                            'Guard Tour',
-                            style: TextStyle(
-                              color: Color(0xffffffff),
+                        Card(
+                          elevation: 0,
+                          /*color: Color(0xff514e4e),*/
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          margin: EdgeInsets.fromLTRB(5, 5, 5, 2),
+                          shadowColor: Color(0xffBCBDC1),
+                          child: ExpansionTile(
+                            /*backgroundColor: Color(0xff514e4e),*/
+                            childrenPadding: EdgeInsets.only(left: 30.0),
+                            title: Text(
+                              'Guard Tour',
+                              style: TextStyle(
+                                color: Color(0xffffffff),
+                              ),
                             ),
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  'Tour',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                              ListTile(
+                                title: Text(
+                                  'Site Audit',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                              ListTile(
+                                title: Text(
+                                  'Conveyance',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          children: [
-                            ListTile(
-                              title: Text(
-                                'Tour',
-                                style: TextStyle(
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                'Site Audit',
-                                style: TextStyle(
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                'Conveyance',
-                                style: TextStyle(
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
-                      ),
-                      Card(
-                        elevation: 0,
-                        /*color: Color(0xff5F6776),*/
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        margin: EdgeInsets.fromLTRB(5, 5, 5, 2),
-                        child: ExpansionTile(
-                          childrenPadding: EdgeInsets.only(left: 30.0),
-                          title: Text(
-                            'Attendance',
-                            style: TextStyle(
-                              color: Color(0xffffffff),
+                        Card(
+                          elevation: 0,
+                          /*color: Color(0xff514e4e),*/
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          margin: EdgeInsets.fromLTRB(5, 5, 5, 2),
+                          shadowColor: Color(0xffBCBDC1),
+                          child: ExpansionTile(
+                            /*backgroundColor: Color(0xff514e4e),*/
+                            childrenPadding: EdgeInsets.only(left: 30.0),
+                            title: Text(
+                              'Attendance',
+                              style: TextStyle(
+                                color: Color(0xffffffff),
+                              ),
                             ),
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  'Self Attendance',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                              ListTile(
+                                title: Text(
+                                  'Mark Attendance',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                              ListTile(
+                                title: Text(
+                                  'Site Attendance',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          children: [
-                            ListTile(
-                              title: Text(
-                                'Self Attendance',
-                                style: TextStyle(
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                'Mark Attendance',
-                                style: TextStyle(
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                'Site Attendance',
-                                style: TextStyle(
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -814,43 +819,64 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
         ),
         body: SizedBox.expand(
           child: Container(
-            /*color: Color(0xff111727),*/
+            /*color: Color(0xff404040),*/
             child: FutureBuilder<List>(
-              future: dbHelper.getAllRecords("Jobneed"),
+              future: updateListView(),
               initialData: List(),
               builder: (context, snapshot) {
                 return snapshot.hasData
                     ? ListView.builder(
-                        itemCount: snapshot.data.length,
+                        itemCount: JobneedList.length,
                         itemBuilder: (_, int position) {
-                          final item = snapshot.data[position];
-                          //get your item data here ...
                           return Card(
                             elevation: 0,
-                            /*color: Color(0xff5F6776),*/
-                            margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
                             child: ListTile(
-                              /*shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),*/
-                              leading: Icon(
-                                Icons.more_vert,
-                                color: Color(0xffffffff),
-                                size: 20,
-                              ),
+                              isThreeLine: true,
+                              /*tileColor: Color(0xff514e4e),*/
+                              leading: new IconButton(
+                                  icon: new Icon(
+                                    Icons.more_vert,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                  /*highlightColor: Colors.pink,*/
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .push<void>(SwipeablePageRoute(
+                                      builder: (_) => get_QuestionsTask(),
+                                    ));
+                                  }),
                               trailing: Icon(
                                 Icons.arrow_forward_ios,
-                                color: Color(0xffffffff),
+                                color: Colors.white,
                                 size: 20,
                               ),
                               title: Text(
-                                /*"Task Name: " +*/ snapshot
-                                    .data[position].row[2],
+                                /*"Task Name: " +*/ this
+                                    .JobneedList[position]
+                                    .jobdesc
+                                    .toString(),
                                 style: TextStyle(
-                                    color: Colors.white.withOpacity(1.0)),
+                                    color: Colors.white.withOpacity(1.0),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                "Plan Date: " +
+                                    /*"Task Name: " +*/ this
+                                        .JobneedList[position]
+                                        .plandatetime
+                                        .toString() +
+                                    "\nEnd Date :" +
+                                    this
+                                        .JobneedList[position]
+                                        .expirydatetime
+                                        .toString(),
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(0.7),
+                                    fontWeight: FontWeight.w100),
                               ),
                             ),
                           );
