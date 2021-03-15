@@ -31,6 +31,7 @@ dependencies:
   swipeable_page_route: ^0.1.6
   fluttertoast:
   qrscan: ^0.2.22
+  flutter_rating:
 
 
 

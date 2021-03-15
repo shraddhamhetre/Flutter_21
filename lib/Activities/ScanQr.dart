@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intelliwiz21/Global/Database.dart';
 import 'package:intelliwiz21/Models/Question_DAO.dart';
 import 'package:intl/intl.dart';
+
+import 'package:flutter_rating/flutter_rating.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:sps_revised/sync.dart';
 //import 'tour.dart';
@@ -64,7 +67,7 @@ class get_Questions_State extends  State<get_QuestionsTask>  {
             var keys = snap.value.keys;
             var data = snap.value;
             print(data);
-            qData.clear();
+            QuestionList.clear();
             for (var key in keys) {
                 questionData a = new questionData(
                     data[key]['questionname'] ,
@@ -74,7 +77,7 @@ class get_Questions_State extends  State<get_QuestionsTask>  {
                     data[key]['option'],
 
                 );
-                qData.add(a);
+                QuestionList.add(a);
 
 print("qname:===="+a.questionname);
         print("opt:===="+a.option);
@@ -109,9 +112,9 @@ print("qname:===="+a.questionname);
             print(data);
             for (var key in keys) {
                 if(data[key]['questionsetid']== qsetid ) {
-                    for(var i=0;i<qData.length;i++)
+                    for(var i=0;i<QuestionList.length;i++)
                     {
-                        if(qData[i].questionid==data[key]['questionid'])
+                        if(QuestionList[i].questionid==data[key]['questionid'])
                         {
                             QuestionAnsTransaction questionAnsTransaction=new QuestionAnsTransaction(
                                 "",
@@ -125,9 +128,9 @@ print("qname:===="+a.questionname);
                                 data[key]['max'],
                                 data[key]['option'],
                                 data[key]['questionid'],
-                                qData[i].type,
+                                QuestionList[i].type,
                                 "0",
-                                qData[i].questionname);
+                                QuestionList[i].questionname);
                             questAnsTransList.add(questionAnsTransaction);
 
                             print(questionAnsTransaction.answer);
@@ -163,8 +166,247 @@ print("qname:===="+a.questionname);
         });
     }
 
+    getQuestion(qid, index){
+        //print("getQuestion called ::=="+ qid.toString()+ "Length"+ QuestionList.length.toString());
+        //print(QsetbgData.length);
+        List<String> option;
+        for (int i=0; i<=QuestionList.length - 1; i++) {
 
+            if (QuestionList[i].options == null){
+                print("====option is null");
 
+            }else{
+                List<String> option= (QuestionList[i].options).split(",");
+                print("====option"+ option.toString());
+
+            }
+            print("====="+QuestionList[i].questionid.toString());
+            if(qid == QuestionList[i].questionid){
+                String qname= QuestionList[i].questionname;
+                String type= QuestionList[i].type.toString();
+
+                print("=============type:"+type);
+                print("=============qname:"+qname+"====qid"+QuestionList[i].questionid.toString());
+                switch(type){
+                    case "57":
+                        return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start ,
+                            mainAxisAlignment: MainAxisAlignment.center ,
+                            children: <Widget>[
+                                new Padding(  padding: EdgeInsets.all( 5.0 ) ,
+                                    child: new Text( QuestionList[i].questionname,
+                                        style: new TextStyle(
+                                            fontSize: 15.0 , color: Colors.black ) , ) ,),
+                                Row(
+                                    children: <Widget>[
+                                        new Radio(
+                                            value: 0,
+                                            groupValue: _radioValue,
+                                            onChanged:  (value) => changedradio(value),
+                                        ),
+                                        new Text('Yes'),
+                                        new Radio(
+                                            value: 1,
+                                            groupValue: _radioValue,
+                                            onChanged: (value) => changedradio(value),
+                                        ),
+                                        new Text('No'),
+                                    ],
+                                )
+                            ],
+                        );
+                        break;
+                    case "79":
+                        {
+                            //int starCount = QuestionList[i].max as int ;
+                            return Column(crossAxisAlignment: CrossAxisAlignment.start ,
+                                mainAxisAlignment: MainAxisAlignment.center ,
+                                children: <Widget>[
+                                    new Padding(  padding: EdgeInsets.all( 5.0 ) ,
+                                        child: new Text( QuestionList[i].questionname,
+                                            style: new TextStyle(
+                                                fontSize: 15.0 , color: Colors.black ) , ) ,),
+                                    Row(
+                                        children: <Widget>[
+                                            new Padding(
+                                                padding: new EdgeInsets.only(
+                                                    top: 10.0,
+                                                    bottom: 10.0,
+                                                ),
+                                                child: new StarRating(
+                                                    size: 20.0,
+                                                    rating: uRating,
+                                                    color: Colors.orange,
+                                                    borderColor: Colors.grey,
+                                                    starCount: starCount,
+                                                    onRatingChanged: (rating) => setState(
+                                                            () {
+                                                            uRating = rating;
+                                                            //questAnsTransList[index].answer= rating.toString();
+                                                            //questAnsTransList[index].jndid= DateTime.now().millisecondsSinceEpoch.toString();
+                                                            print("rating=====:"+ rating.toString());
+                                                        },
+                                                    ),
+                                                ),
+                                            ),
+                                        ],
+                                    )
+                                ],
+                            );
+                        }
+                        break;
+                    case "51":
+                        {
+                            return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start ,
+                                mainAxisAlignment: MainAxisAlignment.center ,
+                                children: <Widget>[
+                                    new Padding(  padding: EdgeInsets.all( 5.0 ) ,
+                                        child: new Text( QuestionList[i].questionname,
+                                            style: new TextStyle(
+                                                fontSize: 15.0 , color: Colors.black ) , ) ,),
+                                    new TextField(controller: _email,decoration: new InputDecoration(hintText: "Email Id"),keyboardType: TextInputType.emailAddress,
+                                        onChanged: (email1) => setState(
+                                                () {
+                                                email1 = email;
+                                                //questAnsTransList[index].answer= email1.toString();
+                                                //questAnsTransList[index].jndid= DateTime.now().millisecondsSinceEpoch.toString();
+                                                print("rating=====:"+ email1.toString());
+                                            },),)
+
+                                ],
+                            );
+                        }
+                        break;
+                    case "48":
+                        {
+                            return Column(
+                                children: <Widget>[
+                                    Text(QuestionList[i].questionname),
+                                ],
+                            );
+                        }
+                        break;
+                    case "49":
+                        {
+                            return Column(
+                                children: <Widget>[
+                                    Text(QuestionList[i].questionname),
+                                ],
+                            );
+                        }break;
+                    case "50":
+                        {
+                            return Column(
+                                children: <Widget>[
+                                    Text(QuestionList[i].questionname),
+                                    new Container(
+                                        margin: const EdgeInsets.all(15.0),
+                                        child:
+                                        DropdownButton(
+                                            value: currentvalue,
+                                            isDense: true,
+                                            onChanged: (String value) {
+                                                setState(() {
+                                                    currentvalue= value;
+                                                    //questAnsTransList[index].answer= value.toString();
+                                                    //questAnsTransList[index].jndid= DateTime.now().millisecondsSinceEpoch.toString();
+                                                    print(currentvalue.toString());
+                                                });
+                                            },
+                                            items: option.map((String value) {
+                                                return DropdownMenuItem(
+                                                    value: value,
+                                                    child: Text(value),
+                                                );
+                                            }).toList(),
+                                        ),
+                                    )],
+                            );
+                        }
+                        break;
+                    case "56":
+                        {
+                            return Column(
+                                children: <Widget>[
+                                    Text(QuestionList[i].questionname),
+                                ],
+                            );
+                        }
+                        break;
+                    case "55":
+                        {
+                            return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start ,
+                                mainAxisAlignment: MainAxisAlignment.center ,
+                                children: <Widget>[
+                                    new Padding(  padding: EdgeInsets.all( 5.0 ) ,
+                                        child: new Text( QuestionList[i].questionname,
+                                            style: new TextStyle(
+                                                fontSize: 15.0 , color: Colors.black ) , ) ,),
+                                    new TextField(controller: _singleline, decoration: new InputDecoration(hintText: "Answer"),
+                                        onChanged: (singleline1) => setState(
+                                                () {
+                                                singleline1 = singleline;
+                                                //questAnsTransList[index].answer= singleline1.toString();
+                                                //questAnsTransList[index].jndid= DateTime.now().millisecondsSinceEpoch.toString();
+                                                print("singleline=====:"+ singleline1.toString());
+                                            },),)
+
+                                ],
+                            );
+                        }
+                        break;
+                    case "52":
+                        {
+                            return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start ,
+                                mainAxisAlignment: MainAxisAlignment.center ,
+                                children: <Widget>[
+                                    new Padding(  padding: EdgeInsets.all( 5.0 ) ,
+                                        child: new Text( QuestionList[i].questionname,
+                                            style: new TextStyle(
+                                                fontSize: 15.0 , color: Colors.black ) , ) ,),
+                                    new TextField(controller: _multiline, decoration: new InputDecoration(hintText: "Answer"),keyboardType: TextInputType.multiline,
+                                        maxLines: null,
+                                        onChanged: (multiline1) => setState(
+                                                () {
+                                                multiline1 = multiline;
+                                                //questAnsTransList[index].answer= multiline1.toString();
+                                                //questAnsTransList[index].jndid= DateTime.now().millisecondsSinceEpoch.toString();
+                                                print("multiline=====:"+ multiline1.toString());
+                                            },),)
+                                ],
+                            );
+                        }
+                        break;
+                    case "53":
+                        {
+                            return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start ,
+                                mainAxisAlignment: MainAxisAlignment.center ,
+                                children: <Widget>[
+                                    new Padding(  padding: EdgeInsets.all( 5.0 ) ,
+                                        child: new Text( QuestionList[i].questionname,
+                                            style: new TextStyle(
+                                                fontSize: 15.0 , color: Colors.black ) , ) ,),
+                                    new TextField( controller: _numeric, decoration: new InputDecoration(hintText: option.toString()), keyboardType: TextInputType.number,
+                                        onChanged: (numeric1) => setState(
+                                                () {
+                                                numeric1 = numeric;
+                                                //questAnsTransList[index].answer= numeric1.toString();
+                                                //questAnsTransList[index].jndid= DateTime.now().millisecondsSinceEpoch.toString();
+                                                print("numeric=====:"+ numeric1.toString());
+                                            },),)
+                                ],
+                            );
+                        }
+                        break;
+                }
+                //return (qname + " " + type);
+            }
+        }
+    }
 
 
     @override
@@ -187,33 +429,21 @@ print("qname:===="+a.questionname);
                                         ? ListView.builder(
                                         itemCount: QuestionList.length,
                                         itemBuilder: (_, int position) {
-                                            return Card(
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(15.0),
-                                                ),
-
-                                                child: ListTile(
-                                                    tileColor: Color(0xff514e4e),
-                                                    leading:new IconButton(
-                                                        icon: new Icon(Icons.more_vert, color: Colors.yellow,
-                                                            size: 20,),
-                                                        highlightColor: Colors.pink,
-                                                        onPressed:()=> null
-                                                        /*Navigator.push(
-                                                    mContext ,
-                                                    MaterialPageRoute( builder: ( context ) => QRViewExample()) ,
-                                                )*/,
-                                                    ),
-
-                                                    trailing: Icon(Icons.arrow_forward_ios,
-                                                        color: Colors.white,
-                                                        size: 20,),
-
-                                                    title: Text(
-                                                        /*"Task Name: " +*/ this.QuestionList[position].questionname.toString(),
-                                                        style: TextStyle(color: Colors.white.withOpacity(1.0)),
-                                                    ),
-                                                ),
+                                            return Container(
+                                                child: new Card(
+                                                    child: GestureDetector(
+                                                        onTap: ( ) =>  Null,
+                                                        child: new Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start ,
+                                                            mainAxisAlignment: MainAxisAlignment.center ,
+                                                            children: <Widget>[
+                                                                new Padding( padding: EdgeInsets.all( 10.0 ) ,
+                                                                    child:  getQuestion(QuestionList[position].questionid, position),
+                                                                ),
+                                                            ] ,
+                                                        ) ,
+                                                    ) ,
+                                                ) ,
                                             );
                                         },
                                     )
