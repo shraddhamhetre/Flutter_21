@@ -31,123 +31,128 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          //margin: EdgeInsets.all(10.0),
-          child: Center(
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30.0),
-                color: Colors.white,
-              ),
-              padding: EdgeInsets.all(10.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    new Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(right: 15.0, left: 15.0),
-                          child: Image.asset(
-                            "assets/youtility_logo.png",
-                            height: 150.0,
-                            width: 250.0,
+    return WillPopScope(
+      onWillPop: () {
+        return new Future(() => false);
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            //margin: EdgeInsets.all(10.0),
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  color: Colors.white,
+                ),
+                padding: EdgeInsets.all(10.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      new Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(right: 15.0, left: 15.0),
+                            child: Image.asset(
+                              "assets/youtility_logo.png",
+                              height: 150.0,
+                              width: 250.0,
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 15.0, left: 15.0),
-                          child: new Column(
-                            children: <Widget>[
-                              new TextFormField(
-                                textAlign: TextAlign.center,
-                                controller: _sitecode,
-                                textCapitalization:
-                                    TextCapitalization.characters,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(20.0),
-                                  border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(30.0)),
-                                  hintText: 'Site Code',
+                          Padding(
+                            padding: EdgeInsets.only(right: 15.0, left: 15.0),
+                            child: new Column(
+                              children: <Widget>[
+                                new TextFormField(
+                                  textAlign: TextAlign.center,
+                                  controller: _sitecode,
+                                  textCapitalization:
+                                      TextCapitalization.characters,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(20.0),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    hintText: 'Site Code',
+                                  ),
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Please enter site code';
+                                    }
+                                  },
                                 ),
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Please enter site code';
-                                  }
-                                },
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              new TextFormField(
-                                textAlign: TextAlign.center,
-                                controller: _username,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(20.0),
-                                  border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(30.0)),
-                                  hintText: 'Username',
+                                SizedBox(
+                                  height: 10.0,
                                 ),
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Please enter username';
-                                  }
-                                },
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              new TextFormField(
-                                textAlign: TextAlign.center,
-                                controller: _userpassword,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(20.0),
-                                  border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(30.0)),
-                                  hintText: 'Password',
+                                new TextFormField(
+                                  textAlign: TextAlign.center,
+                                  controller: _username,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(20.0),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    hintText: 'Username',
+                                  ),
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Please enter username';
+                                    }
+                                  },
                                 ),
-                                obscureText: true,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Please enter password';
-                                  }
-                                },
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              RaisedButton(
-                                padding: EdgeInsets.all(10.0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
+                                SizedBox(
+                                  height: 10.0,
                                 ),
-                                onPressed: () {
-                                  print("Login ");
-                                  onSubmit();
-                                },
-                                /*color: Color(0xff111727),*/
-                                child: new Text(
-                                  "LOGIN",
-                                  style: TextStyle(color: Colors.white),
+                                new TextFormField(
+                                  textAlign: TextAlign.center,
+                                  controller: _userpassword,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(20.0),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    hintText: 'Password',
+                                  ),
+                                  obscureText: true,
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Please enter password';
+                                    }
+                                  },
                                 ),
-                              ),
-                              SizedBox(
-                                height: 20.0,
-                              ),
-                            ],
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                RaisedButton(
+                                  padding: EdgeInsets.all(10.0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  onPressed: () {
+                                    print("Login ");
+                                    onSubmit();
+                                  },
+                                  /*color: Color(0xff111727),*/
+                                  child: new Text(
+                                    "LOGIN",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
