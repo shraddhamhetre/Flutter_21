@@ -1,13 +1,13 @@
 class QuestionSet_DAO {
   int _id;
   int _questionsetid;
-  String _assetid;
+  int _assetid;
   String _qsetname;
-  String _seqno;
+  int _seqno;
   String _enable;
-  String _cuser;
+  int _cuser;
   String _cdtz;
-  String _muser;
+  int _muser;
   String _mdtz;
 
   QuestionSet_DAO(
@@ -35,20 +35,20 @@ class QuestionSet_DAO {
 
   int get id => _id;
   int get questionsetid => _questionsetid;
-  String get assetid => _assetid;
+  int get assetid => _assetid;
   String get qsetname => _qsetname;
-  String get seqno => _seqno;
+  int get seqno => _seqno;
   String get enable => _enable;
-  String get cuser => _cuser;
+  int get cuser => _cuser;
   String get cdtz => _cdtz;
-  String get muser => _muser;
+  int get muser => _muser;
   String get mdtz => _mdtz;
 
   set questionsetid(int newquestionsetid) {
     this._questionsetid = newquestionsetid;
   }
 
-  set assetid(String newassetid) {
+  set assetid(int newassetid) {
     this._assetid = newassetid;
   }
 
@@ -56,7 +56,7 @@ class QuestionSet_DAO {
     this._qsetname = newqsetname;
   }
 
-  set seqno(String newseqno) {
+  set seqno(int newseqno) {
     this._seqno = newseqno;
   }
 
@@ -64,7 +64,7 @@ class QuestionSet_DAO {
     this._enable = newenable;
   }
 
-  set cuser(String newcuser) {
+  set cuser(int newcuser) {
     this._cuser = newcuser;
   }
 
@@ -72,7 +72,7 @@ class QuestionSet_DAO {
     this._cdtz = newcdtz;
   }
 
-  set muser(String newmuser) {
+  set muser(int newmuser) {
     this._muser = newmuser;
   }
 

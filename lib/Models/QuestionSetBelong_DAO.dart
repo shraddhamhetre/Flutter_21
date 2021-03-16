@@ -2,19 +2,19 @@ class QuestionSetBelong_DAO {
   int _id;
   int _qsbid;
   String _ismandatory;
-  String _seqno;
-  String _questionsetid;
-  String _questionid;
+  int _seqno;
+  int _questionsetid;
+  int _questionid;
   String _cdtz;
   String _mdtz;
   String _isdeleted;
-  String _cuser;
-  String _muser;
+  int _cuser;
+  int _muser;
   String _Min;
   String _Max;
   String _alertOn;
   String _option;
-  String _buid;
+  int _buid;
 
   QuestionSetBelong_DAO(
       this._qsbid,
@@ -54,19 +54,19 @@ class QuestionSetBelong_DAO {
   int get id => _id;
   int get qsbid => _qsbid;
   String get ismandatory => _ismandatory;
-  String get seqno => _seqno;
-  String get questionsetid => _questionsetid;
-  String get questionid => _questionid;
+  int get seqno => _seqno;
+  int get questionsetid => _questionsetid;
+  int get questionid => _questionid;
   String get cdtz => _cdtz;
   String get mdtz => _mdtz;
   String get isdeleted => _isdeleted;
-  String get cuser => _cuser;
-  String get muser => _muser;
+  int get cuser => _cuser;
+  int get muser => _muser;
   String get Min => _Min;
   String get Max => _Max;
   String get alertOn => _alertOn;
   String get option => _option;
-  String get buid => _buid;
+  int get buid => _buid;
 
   set qsbid(int newqsbid) {
     this._qsbid = newqsbid;
@@ -76,15 +76,15 @@ class QuestionSetBelong_DAO {
     this._ismandatory = newismandatory;
   }
 
-  set seqno(String newseqno) {
+  set seqno(int newseqno) {
     this._seqno = newseqno;
   }
 
-  set questionsetid(String newquestionsetid) {
+  set questionsetid(int newquestionsetid) {
     this._questionsetid = newquestionsetid;
   }
 
-  set questionid(String newquestionid) {
+  set questionid(int newquestionid) {
     this._questionid = newquestionid;
   }
 
@@ -100,11 +100,11 @@ class QuestionSetBelong_DAO {
     this._isdeleted = newisdeleted;
   }
 
-  set cuser(String newcuser) {
+  set cuser(int newcuser) {
     this._cuser = newcuser;
   }
 
-  set muser(String newmuser) {
+  set muser(int newmuser) {
     this._muser = newmuser;
   }
 
@@ -124,7 +124,7 @@ class QuestionSetBelong_DAO {
     this._option = newoption;
   }
 
-  set buid(String newbuid) {
+  set buid(int newbuid) {
     this._buid = newbuid;
   }
 

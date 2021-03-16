@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:intelliwiz21/Models/Jobneed_DAO.dart';
+import 'package:intelliwiz21/Models/Jobneeddetails_DAO.dart';
+import 'package:intelliwiz21/Models/QuestionSetBelong_DAO.dart';
+import 'package:intelliwiz21/Models/QuestionSet_DAO.dart';
 import 'package:intelliwiz21/Models/Question_DAO.dart';
 import 'package:intelliwiz21/Tables/AssetDetail_Table.dart';
 import 'package:intelliwiz21/Tables/AssignedSitePeople_Table.dart';
@@ -63,7 +66,7 @@ class DatabaseHelper {
 
     Future<Database> get database async {
 
-        print("Database ==== 1");
+        //print("Database ==== 1");
         if (_database != null) return _database;
         // lazily instantiate the db the first time it is accessed
         _database = await _initDatabase();
@@ -180,9 +183,39 @@ class DatabaseHelper {
         return result;
     }
 
+    Future<List<Map<String, dynamic>>> getJNDList1(String dbTable, String Jobneedid) async {
+        Database db = await this.database;
+        var result = await db.rawQuery("SELECT * FROM $dbTable where jobneedid = $Jobneedid");
+
+        //print("getTodoMapList all records------"+dbTable +"="+ result.length.toString());
+//		var result = await db.rawQuery('SELECT * FROM $todoTable order by $colTitle ASC');
+        //var result = await db.query(todoTable, orderBy: '$colTitle ASC');
+        return result;
+    }
+    Future<List<Jobneeddetails_DAO>> getJNDList(String dbTable, String Jobneedid) async {
+
+        var todoMapList = await getJNDList1(dbTable, Jobneedid);
+
+
+        int count = todoMapList.length;
+
+        print("getTodoList length: "+ count.toString());
+
+        List<Jobneeddetails_DAO> JndList = List<Jobneeddetails_DAO>();
+        // For loop to create a 'todo List' from a 'Map List'
+        for (int i = 0; i < count; i++) {
+
+            JndList.add(Jobneeddetails_DAO.fromMapObject(todoMapList[i]));
+        }
+        print("JndList length: "+ JndList.length.toString());
+        return JndList;
+    }
+
     Future<List<Jobneed_DAO>> getTaskList(String dbTable) async {
 
-        var todoMapList = await getTodoMapList(dbTable); // Get 'Map List' from database
+        var todoMapList = await getTodoMapList(dbTable);
+
+
         int count = todoMapList.length;
 
         //print("getTodoList length: "+ count.toString());
@@ -199,10 +232,12 @@ class DatabaseHelper {
 
     Future<List<Question_DAO>> getquestionList(String dbTable) async {
 
+        print("table name after update::"+dbTable);
+
         var todoMapList1 = await getTodoMapList(dbTable); // Get 'Map List' from database
         int count = todoMapList1.length;
 
-        print("getTodoList length: "+ count.toString());
+        print("question length: "+ count.toString());
 
         List<Question_DAO> QuestionListList = List<Question_DAO>();
         // For loop to create a 'todo List' from a 'Map List'
@@ -214,37 +249,37 @@ class DatabaseHelper {
         return QuestionListList;
     }
 
-    Future<List<Jobneed_DAO>> getqSetList(String dbTable) async {
+    Future<List<QuestionSet_DAO>> getqSetList(String dbTable) async {
 
         var todoMapList = await getTodoMapList(dbTable); // Get 'Map List' from database
-        int count = todoMapList.length;
+        int count1 = todoMapList.length;
 
-        print("getTodoList length: "+ count.toString());
+        print("getTodoList length: "+ count1.toString());
 
-        List<Jobneed_DAO> JobneedList = List<Jobneed_DAO>();
+        List<QuestionSet_DAO> QsetList = List<QuestionSet_DAO>();
         // For loop to create a 'todo List' from a 'Map List'
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count1; i++) {
 
-            JobneedList.add(Jobneed_DAO.fromMapObject(todoMapList[i]));
+            QsetList.add(QuestionSet_DAO.fromMapObject(todoMapList[i]));
         }
-        print("JobneedList length: "+ JobneedList.length.toString());
-        return JobneedList;
+        print("QsetList length: "+ QsetList.length.toString());
+        return QsetList;
     }
-    Future<List<Jobneed_DAO>> getqSetbelongList(String dbTable) async {
+    Future<List<QuestionSetBelong_DAO>> getqSetbelongList(String dbTable) async {
 
         var todoMapList = await getTodoMapList(dbTable); // Get 'Map List' from database
-        int count = todoMapList.length;
+        int count2 = todoMapList.length;
 
-        print("getTodoList length: "+ count.toString());
+        print("getTodoList length: "+ count2.toString());
 
-        List<Jobneed_DAO> JobneedList = List<Jobneed_DAO>();
+        List<QuestionSetBelong_DAO> QSetBelongList = List<QuestionSetBelong_DAO>();
         // For loop to create a 'todo List' from a 'Map List'
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count2; i++) {
 
-            JobneedList.add(Jobneed_DAO.fromMapObject(todoMapList[i]));
+            QSetBelongList.add(QuestionSetBelong_DAO.fromMapObject(todoMapList[i]));
         }
-        print("JobneedList length: "+ JobneedList.length.toString());
-        return JobneedList;
+        print("QSetBelongList length: "+ QSetBelongList.length.toString());
+        return QSetBelongList;
     }
 
     // Deletes the row specified by the id. The number of affected rows is

@@ -1,19 +1,19 @@
 class Jobneeddetails_DAO {
   int _id;
   int _jndid;
-  String _jobneedid;
-  String _seqno;
-  String _questionid;
+  int _jobneedid;
+  int _seqno;
+  int _questionid;
   String _Answer;
   String _Min;
   String _Max;
   String _option;
   String _alerton;
-  String _type;
+  int _type;
   String _cdtz;
   String _mdtz;
-  String _cuser;
-  String _muser;
+  int _cuser;
+  int _muser;
   String _ismandatory;
 
   Jobneeddetails_DAO(
@@ -53,34 +53,34 @@ class Jobneeddetails_DAO {
 
   int get id => _id;
   int get jndid => _jndid;
-  String get jobneedid => _jobneedid;
-  String get seqno => _seqno;
-  String get questionid => _questionid;
+  int get jobneedid => _jobneedid;
+  int get seqno => _seqno;
+  int get questionid => _questionid;
   String get Answer => _Answer;
   String get Min => _Min;
   String get Max => _Max;
   String get option => _option;
   String get alerton => _alerton;
-  String get type => _type;
+  int get type => _type;
   String get cdtz => _cdtz;
   String get mdtz => _mdtz;
-  String get cuser => _cuser;
-  String get muser => _muser;
+  int get cuser => _cuser;
+  int get muser => _muser;
   String get ismandatory => _ismandatory;
 
   set jndid(int newjndid) {
     this._jndid = newjndid;
   }
 
-  set jobneedid(String newjobneedid) {
+  set jobneedid(int newjobneedid) {
     this._jobneedid = newjobneedid;
   }
 
-  set seqno(String newseqno) {
+  set seqno(int newseqno) {
     this._seqno = newseqno;
   }
 
-  set questionid(String newquestionid) {
+  set questionid(int newquestionid) {
     this._questionid = newquestionid;
   }
 
@@ -104,7 +104,7 @@ class Jobneeddetails_DAO {
     this._alerton = newalerton;
   }
 
-  set type(String newtype) {
+  set type(int newtype) {
     this._type = newtype;
   }
 
@@ -116,11 +116,11 @@ class Jobneeddetails_DAO {
     this._mdtz = newmdtz;
   }
 
-  set cuser(String newcuser) {
+  set cuser(int newcuser) {
     this._cuser = newcuser;
   }
 
-  set muser(String newmuser) {
+  set muser(int newmuser) {
     this._muser = newmuser;
   }
 
