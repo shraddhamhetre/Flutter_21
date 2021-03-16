@@ -15,98 +15,102 @@ import 'Global/GlobalVariable.dart';
 //List<UploadJobneedParameter>Uploadjobneed = [];
 BuildContext mContext;
 
-class Logout extends StatelessWidget{
+class Logout extends StatelessWidget {
+  //SimData simData;
 
+  Future onSubmit1() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
+    UserData userData = new UserData();
+    userData.deviceid = prefs.get('deviceid');
+    userData.sitecode = prefs.get('Sitecode');
+    userData.loginid = prefs.get('Username');
+    userData.password = prefs.get('Userpassword');
+    userData.servicename = 'Logout';
+    userData.story = '1';
+    print(userData.toJson());
+    print("========================");
 
-    //SimData simData;
+    //else{
+    Map<String, String> body = {
+      'deviceid': userData.deviceid,
+      'loginid': userData.loginid,
+      'password': userData.password,
+      'servicename': userData.servicename,
+      'sitecode': userData.sitecode,
+      'story': userData.story,
+    };
 
-    Future onSubmit1() async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
+    http.Response response = await http.post(
+      Uri.encodeFull(GlobalVariable().getServerUrl()),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: body,
+    );
+    print(response.body);
+    Map decoded = json.decode(response.body);
 
+    String rc = decoded['auth'];
+    // String status = decoded['status'];
+    print("===========");
+    print(rc);
 
+    //print(status);
 
-        UserData userData = new UserData( );
-        userData.deviceid = prefs.get('deviceid');
-        userData.sitecode = prefs.get('Sitecode');
-        userData.loginid  = prefs.get('Username');
-        userData.password = prefs.get('Userpassword');
-        userData.servicename = 'Logout';
-        userData.story = '1';
-        print( userData.toJson( ) );
-        print("========================");
+    if (decoded['rc'] == 0 ||
+        decoded['status'] == true ||
+        decoded['auth'] == true) {
+      print("===========go to login");
+      Navigator.of(mContext).push<void>(MaterialPageRoute(
+        builder: (_) => HomePage(),
+      ));
 
-
-        //else{
-        Map<String , String> body = {
-            'deviceid': userData.deviceid ,
-            'loginid': userData.loginid ,
-            'password': userData.password ,
-            'servicename': userData.servicename ,
-            'sitecode': userData.sitecode ,
-            'story': userData.story ,
-        };
-
-        http.Response response = await http.post(
-            Uri.encodeFull(GlobalVariable().getServerUrl()) ,
-            headers:
-            {
-                "Accept": "application/json" ,
-                "Content-Type": "application/x-www-form-urlencoded"
-            } ,
-            body: body ,
-        );
-        print( response.body );
-        Map decoded = json.decode(response.body);
-
-        String rc = decoded['auth'];
-        // String status = decoded['status'];
-        print("===========");
-        print(rc);
-
-        //print(status);
-
-
-        if (decoded['rc']==0 || decoded['status'] == true || decoded['auth'] == true) {
-            print("===========go to login");
-            Navigator.of(mContext).push<void>(SwipeablePageRoute(
-                builder: (_) => HomePage(),
-            ));
-
-
-           /* Navigator.pop(
+      /* Navigator.pop(
                 mContext ,
                 MaterialPageRoute( builder: ( context ) => HomePage()) ,
             );*/
-        }
-
-
-        //}
     }
 
-    @override
-    Widget build(BuildContext context) {
-        mContext=context;
-        {
-            return AlertDialog(
-                title: new Text("Logout"),
-                content: new Text("Do you want to logout?"),
-                actions: <Widget>[
-                    // usually buttons at the bottom of the dialog
-                    new FlatButton(
-                        child: new Text("Yes"),
-                        onPressed:onSubmit1,/*() {
+    //}
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    mContext = context;
+    {
+      return AlertDialog(
+        contentTextStyle: TextStyle(
+          color: Color(0xffffffff),
+        ),
+        elevation: 0,
+        backgroundColor: Color(0xff33334E),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        title: new Text(
+          "Logout",
+          style: TextStyle(color: Color(0xffffffff)),
+        ),
+        content: new Text("Do you want to logout?"),
+        actions: <Widget>[
+          // usually buttons at the bottom of the dialog
+          new FlatButton(
+            color: Color(0xff1A1C2B),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            child: new Text("Yes"),
+            onPressed:
+                onSubmit1, /*() {
               Navigator.push(
                   context,
                   new MaterialPageRoute(
                     builder: (BuildContext context) =>
                     new HomePage(),));
             },*/
-
-
-
-                    ),
-                   /* new FlatButton(
+          ),
+          /* new FlatButton(
                         child: new Text("No"),
                         onPressed:  () {
                             Navigator.push(
@@ -116,25 +120,28 @@ class Logout extends StatelessWidget{
                                     new Home(),));
                         },
                     ),*/
-                ],
-            );
-        }
+        ],
+      );
     }
+  }
 }
-
-
-
 
 class UserData {
-    String deviceid;
-    String loginid;
-    String password;
-    String servicename;
-    String sitecode;
-    String story;
+  String deviceid;
+  String loginid;
+  String password;
+  String servicename;
+  String sitecode;
+  String story;
 
-    //UserData({this.deviceid:"358188079376258",this.loginid="shraddham", this.password:"sps123", this.servicename:"Login", this.sitecode:"YTPLD.YTHO",this.story:"1"});
+  //UserData({this.deviceid:"358188079376258",this.loginid="shraddham", this.password:"sps123", this.servicename:"Login", this.sitecode:"YTPLD.YTHO",this.story:"1"});
 
-    Map toJson() => {"deviceid":deviceid,"loginid":loginid,"password":password,"servicename":servicename,"sitecode":sitecode,"story":story};
+  Map toJson() => {
+        "deviceid": deviceid,
+        "loginid": loginid,
+        "password": password,
+        "servicename": servicename,
+        "sitecode": sitecode,
+        "story": story
+      };
 }
-

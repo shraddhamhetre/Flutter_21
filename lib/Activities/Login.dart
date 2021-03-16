@@ -291,9 +291,12 @@ class HomePageState extends State<HomePage> {
         decoded['status'] == true ||
         decoded['auth'] == true) {
       print("Login Succesful");
-      Navigator.of(context).push<void>(SwipeablePageRoute(
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (_) => Sync(),
       ));
+      /*Navigator.of(context).push<void>(SwipeablePageRoute(
+        builder: (_) => Sync(),
+      ));*/
     } else {
       print(decoded['msg']);
       //Fluttertoast.showToast(msg: decoded['msg'], toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER,);
