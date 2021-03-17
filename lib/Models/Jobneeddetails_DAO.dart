@@ -4,9 +4,9 @@ class Jobneeddetails_DAO {
   int _jobneedid;
   int _seqno;
   int _questionid;
-  String _Answer;
-  String _Min;
-  String _Max;
+  String _answer;
+  String _min;
+  String _max;
   String _option;
   String _alerton;
   int _type;
@@ -21,9 +21,9 @@ class Jobneeddetails_DAO {
       this._jobneedid,
       this._seqno,
       this._questionid,
-      this._Answer,
-      this._Min,
-      this._Max,
+      this._answer,
+      this._min,
+      this._max,
       this._option,
       this._alerton,
       this._type,
@@ -39,9 +39,9 @@ class Jobneeddetails_DAO {
       this._jobneedid,
       this._seqno,
       this._questionid,
-      this._Answer,
-      this._Min,
-      this._Max,
+      this._answer,
+      this._min,
+      this._max,
       this._option,
       this._alerton,
       this._type,
@@ -56,9 +56,9 @@ class Jobneeddetails_DAO {
   int get jobneedid => _jobneedid;
   int get seqno => _seqno;
   int get questionid => _questionid;
-  String get Answer => _Answer;
-  String get Min => _Min;
-  String get Max => _Max;
+  String get answer => _answer;
+  String get min => _min;
+  String get max => _max;
   String get option => _option;
   String get alerton => _alerton;
   int get type => _type;
@@ -84,16 +84,16 @@ class Jobneeddetails_DAO {
     this._questionid = newquestionid;
   }
 
-  set Answer(String newAnswer) {
-    this._Answer = newAnswer;
+  set answer(String newanswer) {
+    this._answer = newanswer;
   }
 
-  set Min(String newMin) {
-    this._Min = newMin;
+  set min(String newmin) {
+    this._min = newmin;
   }
 
-  set Max(String newMax) {
-    this._Max = newMax;
+  set max(String newmax) {
+    this._max = newmax;
   }
 
   set option(String newoption) {
@@ -138,9 +138,9 @@ class Jobneeddetails_DAO {
     map['jobneedid'] = _jobneedid;
     map['seqno'] = _seqno;
     map['questionid'] = _questionid;
-    map['Answer'] = _Answer;
-    map['Min'] = _Min;
-    map['Max'] = _Max;
+    map['answer'] = _answer;
+    map['min'] = _min;
+    map['max'] = _max;
     map['option'] = _option;
     map['alerton'] = _alerton;
     map['type'] = _type;
@@ -159,9 +159,9 @@ class Jobneeddetails_DAO {
     this._jobneedid = map['jobneedid'];
     this._seqno = map['seqno'];
     this._questionid = map['questionid'];
-    this._Answer = map['Answer'];
-    this._Min = map['Min'];
-    this._Max = map['Max'];
+    this._answer = map['answer'];
+    this._min = map['min'];
+    this._max = map['max'];
     this._option = map['option'];
     this._alerton = map['alerton'];
     this._type = map['type'];

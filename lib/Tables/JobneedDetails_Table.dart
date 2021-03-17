@@ -7,9 +7,9 @@ class JOBNeedDetails_Table {
     final String JOBNEEDDETAILS_JOBNEEDID = "jobneedid";
     final String JOBNEEDDETAILS_SEQNO = "seqno";
     final String JOBNEEDDETAILS_QUESTIONID = "questionid";
-    final String JOBNEEDDETAILS_ANSWER = "Answer";
-    final String JOBNEEDDETAILS_MIN = "Min";
-    final String JOBNEEDDETAILS_MAX = "Max";
+    final String JOBNEEDDETAILS_ANSWER = "answer";
+    final String JOBNEEDDETAILS_MIN = "min";
+    final String JOBNEEDDETAILS_MAX = "max";
     final String JOBNEEDDETAILS_OPTION = "option";
     final String JOBNEEDDETAILS_ALERTON = "alerton";
     final String JOBNEEDDETAILS_TYPE = "type";

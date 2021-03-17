@@ -3,7 +3,7 @@ class Question_DAO {
   int _questionid;
   String _questionname;
   int _type;
-  String _options;
+  String _option;
   int _unit;
   String _Min;
   String _Max;
@@ -18,7 +18,7 @@ class Question_DAO {
       this._questionid,
       this._questionname,
       this._type,
-      this._options,
+      this._option,
       this._unit,
       this._Min,
       this._Max,
@@ -34,7 +34,7 @@ class Question_DAO {
       this._questionid,
       this._questionname,
       this._type,
-      this._options,
+      this._option,
       this._unit,
       this._Min,
       this._Max,
@@ -49,7 +49,7 @@ class Question_DAO {
   int get questionid => _questionid;
   String get questionname => _questionname;
   int get type => _type;
-  String get options => _options;
+  String get option => _option;
   int get unit => _unit;
   String get Min => _Min;
   String get Max => _Max;
@@ -72,8 +72,8 @@ class Question_DAO {
     this._type = newtype;
   }
 
-  set options(String newoptions) {
-    this._options = newoptions;
+  set option(String newoption) {
+    this._option = newoption;
   }
 
   set unit(int newunit) {
@@ -121,7 +121,7 @@ class Question_DAO {
     map['questionid'] = _questionid;
     map['questionname'] = _questionname;
     map['type'] = _type;
-    map['options'] = _options;
+    map['option'] = _option;
     map['unit'] = _unit;
     map['Min'] = _Min;
     map['Max'] = _Max;
@@ -140,7 +140,7 @@ class Question_DAO {
     this._questionid = map['questionid'];
     this._questionname = map['questionname'];
     this._type = map['type'];
-    this._options = map['options'];
+    this._option = map['option'];
     this._unit = map['unit'];
     this._Min = map['Min'];
     this._Max = map['Max'];

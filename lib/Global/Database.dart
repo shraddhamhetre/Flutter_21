@@ -23,7 +23,6 @@ import 'package:intelliwiz21/Tables/TypeAssist_Table.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
-
 import '../Tables/Address_Table.dart';
 
 class DatabaseHelper {
@@ -152,18 +151,11 @@ class DatabaseHelper {
         
         print("count= :"+ tablename);
         Database db = await instance.database;
-
-
         return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tablename'))as int;
     }
 
-    // We are assuming here that the id column in the map is set. The other
-    // column values will be used to update the row.
-    Future<int> update(Map<String, dynamic> row) async {
-        Database db = await instance.database;
-        int id = row[columnId];
-        return await db.update(table, row, where: '$columnId = ?', whereArgs: [id]);
-    }
+
+
     Future<List> getAllRecords(String dbTable) async {
         Database db = await instance.database;
         var result = await db.rawQuery("SELECT * FROM $dbTable");
@@ -171,6 +163,35 @@ class DatabaseHelper {
         print("Result list : "+ result.length.toString());
 
         return result.toList();
+    }
+
+    Future<List> getSelectedRecords(String dbTable, String jobneedid) async {
+        Database db = await instance.database;
+        var result = await db.rawQuery("SELECT * FROM $dbTable where jobneedid = $jobneedid");
+
+        print("Result list getSelectedRecords : "+ result.length.toString());
+
+        return result.toList();
+    }
+
+
+    Future<List<Jobneed_DAO>> getJobneedListSync(String dbTable, String jobneedid) async {
+
+        var todoMapList = await getSelectedRecords(dbTable, jobneedid);
+
+
+        int count = todoMapList.length;
+
+        //print("getTodoList length: "+ count.toString());
+
+        List<Jobneed_DAO> JobneedList = List<Jobneed_DAO>();
+        // For loop to create a 'todo List' from a 'Map List'
+        for (int i = 0; i < count; i++) {
+
+            JobneedList.add(Jobneed_DAO.fromMapObject(todoMapList[i]));
+        }
+        //print("JobneedList length: "+ JobneedList.length.toString());
+        return JobneedList;
     }
 
     Future<List<Map<String, dynamic>>> getTodoMapList(String dbTable) async {
@@ -186,12 +207,37 @@ class DatabaseHelper {
     Future<List<Map<String, dynamic>>> getJNDList1(String dbTable, String Jobneedid) async {
         Database db = await this.database;
         var result = await db.rawQuery("SELECT * FROM $dbTable where jobneedid = $Jobneedid");
-
-        //print("getTodoMapList all records------"+dbTable +"="+ result.length.toString());
-//		var result = await db.rawQuery('SELECT * FROM $todoTable order by $colTitle ASC');
-        //var result = await db.query(todoTable, orderBy: '$colTitle ASC');
         return result;
     }
+
+
+
+    UpdateJndTable(tablename, ans, cdtz, jndid )async{
+        print("Update jnd Starts");
+        Database db = await this.database;
+        int updateCount = await db.rawUpdate('''
+            UPDATE $tablename 
+            SET answer = ?,  cdtz= ? 
+            WHERE  jndid= ?
+            ''',
+                    [ans, cdtz, jndid]);
+
+        print("Update jnd end"+ updateCount.toString());
+    }
+
+    UpdateJobneedTable(tablename, syncstatus, jobstatus, starttime, jobneedid )async{
+        print("Update Jobneed Starts");
+        Database db = await this.database;
+        int updateCount = await db.rawUpdate('''
+            UPDATE $tablename 
+            SET syncStatus = ?,  jobstatus= ? , starttime= ?, endtime= ?
+            WHERE  Jobneedid= ?
+            ''',
+            [syncstatus, jobstatus,starttime, starttime, jobneedid]);
+
+        print("Update Jobneed end"+ updateCount.toString());
+    }
+
     Future<List<Jobneeddetails_DAO>> getJNDList(String dbTable, String Jobneedid) async {
 
         var todoMapList = await getJNDList1(dbTable, Jobneedid);

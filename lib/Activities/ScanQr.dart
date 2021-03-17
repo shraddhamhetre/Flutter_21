@@ -6,8 +6,8 @@ import 'package:intelliwiz21/Models/Jobneeddetails_DAO.dart';
 import 'package:intelliwiz21/Models/QuestionSetBelong_DAO.dart';
 import 'package:intelliwiz21/Models/QuestionSet_DAO.dart';
 import 'package:intelliwiz21/Models/Question_DAO.dart';
+import 'package:intelliwiz21/UploadDataFiles/UploadJobneed.dart';
 import 'package:intl/intl.dart';
-
 import 'package:flutter_rating/flutter_rating.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,6 +50,9 @@ class get_Questions_State extends  State<get_QuestionsTask> {
     List<QuestionSetBelong_DAO> QSetBelongList;
 
     List<Jobneeddetails_DAO> JndList = [];
+    DateTime currentDate = DateTime.now();
+    TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+
 
 
     int count = 0;
@@ -83,34 +86,34 @@ class get_Questions_State extends  State<get_QuestionsTask> {
 
         print("getQuestions : JndList: "+ JndList.length.toString());
 
-/*        questAnsTransList.clear();
-                if(data[key]['questionsetid']== qsetid ) {
-                    for(var i=0;i<QuestionList.length;i++)
-                    {
-                        if(QuestionList[i].questionid==data[key]['questionid'])
-                        {
-                            QuestionAnsTransaction questionAnsTransaction=new QuestionAnsTransaction(
-                                "",
-                                DateTime.now().millisecondsSinceEpoch.toString(),
-                                prefs.get('peopleid').toString(),
-                                DateTime.now().millisecondsSinceEpoch.toString(),
-                                prefs.get('peopleid').toString(),
-                                DateTime.now().millisecondsSinceEpoch.toString(),
-                                prefs.get('JidtimeStamp'),
-                                data[key]['min'],
-                                data[key]['max'],
-                                data[key]['option'],
-                                data[key]['questionid'],
-                                QuestionList[i].type,
-                                "0",
-                                QuestionList[i].questionname);
-                            questAnsTransList.add(questionAnsTransaction);
+    }
 
-                            print(questionAnsTransaction.answer);
-                        }
-                    }
-                }*/
+    Future<void> _selectDate(BuildContext context, int index) async {
+        final DateTime pickedDate = await showDatePicker(
+            context: context,
+            initialDate: currentDate,
+            firstDate: DateTime(2015),
+            lastDate: DateTime(2050));
+        if (pickedDate != null && pickedDate != currentDate)
+            setState(() {
+                currentDate = pickedDate;
+                JndList[index].answer= currentDate.toString();
+                JndList[index].jndid= DateTime.now().millisecondsSinceEpoch;
 
+            });
+    }
+
+    Future<void> _selectTime(BuildContext context, int index) async {
+        final TimeOfDay pickedTime = await showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.fromDateTime(DateTime.now())) ;
+            if (pickedTime != null && pickedTime != currentDate)
+            setState(() {
+                selectedTime = pickedTime;
+                JndList[index].answer= selectedTime.toString();
+                JndList[index].jndid= DateTime.now().millisecondsSinceEpoch;
+
+            });
     }
 
     @override
@@ -131,6 +134,9 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                 case 0:
                     _textResult = 'Yes';
                     print(_textResult);
+
+
+
                     break;
                 case 1:
                     _textResult = 'No';
@@ -148,14 +154,8 @@ class get_Questions_State extends  State<get_QuestionsTask> {
 
                     if(qid == QuestionList[i].questionid){
 
-                        if (QuestionList[i].options == null){
-                            print("====option is null");
-
-                        }else{
-                            List<String> option= (QuestionList[i].options).split(",");
-                            print("====option"+ option.toString());
-
-                        }
+                        List<String> option= (QuestionList[i].option).split(",");
+                        print("====option"+ option.toString());
 
                         String qname= QuestionList[i].questionname;
                         String type= QuestionList[i].type.toString();
@@ -164,6 +164,7 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                         print("=============qname:"+qname+"====qid"+QuestionList[i].questionid.toString());
                         switch(type){
                             case "57":
+                                //Yes/No type
                                 return Column(
                                     crossAxisAlignment: CrossAxisAlignment.start ,
                                     mainAxisAlignment: MainAxisAlignment.center ,
@@ -217,6 +218,9 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                                             onRatingChanged: (rating) => setState(
                                                                     () {
                                                                     uRating = rating;
+
+                                                                    JndList[index].answer= rating.toString();
+                                                                    JndList[index].cdtz= DateTime.now().millisecondsSinceEpoch.toString();
                                                                     //questAnsTransList[index].answer= rating.toString();
                                                                     //questAnsTransList[index].jndid= DateTime.now().millisecondsSinceEpoch.toString();
                                                                     print("rating=====:"+ rating.toString());
@@ -244,8 +248,8 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                                 onChanged: (email1) => setState(
                                                         () {
                                                         email1 = email;
-                                                        //questAnsTransList[index].answer= email1.toString();
-                                                        //questAnsTransList[index].jndid= DateTime.now().millisecondsSinceEpoch.toString();
+                                                        JndList[index].answer= email1.toString();
+                                                        JndList[index].cdtz= DateTime.now().millisecondsSinceEpoch.toString();
                                                         print("rating=====:"+ email1.toString());
                                                     },),)
 
@@ -254,6 +258,8 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                 }
                                 break;
                             case "48":
+
+                                //Checkbox type
                                 {
                                     return Column(
                                         children: <Widget>[
@@ -267,9 +273,45 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                     return Column(
                                         children: <Widget>[
                                             Text(QuestionList[i].questionname),
+                                            RaisedButton(
+                                                onPressed: () => _selectDate(context, index),
+                                                child:  Text(currentDate.toString())
+                                            ),
+
+
                                         ],
                                     );
-                                }break;
+                                }
+
+                                /*{
+                                    return Column(crossAxisAlignment: CrossAxisAlignment.start ,
+                                        mainAxisAlignment: MainAxisAlignment.center ,
+                                        children: <Widget>[
+                                            new Padding(padding: EdgeInsets.all( 5.0 ) ,
+                                                child: new Text( qData[i].questionname,
+                                                    style: new TextStyle(
+                                                        fontSize: 15.0 , color: Colors.black ) , ) ,),
+                                            DateTimePickerFormField(
+                                                controller: _date,
+                                                inputType: inputType1,
+                                                format: formats[inputType1],
+                                                editable: editable,
+                                                decoration: InputDecoration(
+                                                    labelText: 'date'),
+                                                onChanged: (dt) => setState(
+                                                        () {
+                                                        this.dt = dt;
+                                                        questAnsTransList[index].answer= dt.toString();
+                                                        questAnsTransList[index].jndid= DateTime.now().millisecondsSinceEpoch.toString();
+                                                        print("dt=====:"+ dt.toString());
+                                                    },
+                                                ),
+                                            ),
+                                        ],
+                                    );
+                                }*/
+
+                                break;
                             case "50":
                                 {
                                     return Column(
@@ -284,8 +326,8 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                                     onChanged: (String value) {
                                                         setState(() {
                                                             currentvalue= value;
-                                                            //questAnsTransList[index].answer= value.toString();
-                                                            //questAnsTransList[index].jndid= DateTime.now().millisecondsSinceEpoch.toString();
+                                                            JndList[index].answer= currentvalue.toString();
+                                                            JndList[index].cdtz= DateTime.now().millisecondsSinceEpoch.toString();
                                                             print(currentvalue.toString());
                                                         });
                                                     },
@@ -305,6 +347,10 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                     return Column(
                                         children: <Widget>[
                                             Text(QuestionList[i].questionname),
+                                            RaisedButton(
+                                                onPressed: () => _selectTime(context, index),
+                                                child:  Text(selectedTime.toString())
+                                            ),
                                         ],
                                     );
                                 }
@@ -323,8 +369,8 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                                 onChanged: (singleline1) => setState(
                                                         () {
                                                         singleline1 = singleline;
-                                                        //questAnsTransList[index].answer= singleline1.toString();
-                                                        //questAnsTransList[index].jndid= DateTime.now().millisecondsSinceEpoch.toString();
+                                                        JndList[index].answer= singleline1.toString();
+                                                        JndList[index].cdtz= DateTime.now().millisecondsSinceEpoch.toString();
                                                         print("singleline=====:"+ singleline1.toString());
                                                     },),)
 
@@ -347,8 +393,8 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                                 onChanged: (multiline1) => setState(
                                                         () {
                                                         multiline1 = multiline;
-                                                        //questAnsTransList[index].answer= multiline1.toString();
-                                                        //questAnsTransList[index].jndid= DateTime.now().millisecondsSinceEpoch.toString();
+                                                        JndList[index].answer= multiline1.toString();
+                                                        JndList[index].cdtz= DateTime.now().millisecondsSinceEpoch.toString();
                                                         print("multiline=====:"+ multiline1.toString());
                                                     },),)
                                         ],
@@ -370,8 +416,8 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                                 onChanged: (numeric1) => setState(
                                                         () {
                                                         numeric1 = numeric;
-                                                        JndList[index].Answer= numeric1.toString();
-                                                        JndList[index].jndid= DateTime.now().millisecondsSinceEpoch;
+                                                        JndList[index].answer= numeric1.toString();
+                                                        JndList[index].cdtz= DateTime.now().millisecondsSinceEpoch.toString();
                                                         print("numeric=====:"+ numeric1.toString());
                                                     },),)
                                         ],
@@ -382,9 +428,6 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                         //return (qname + " " + type);
                     }
                 }
-
-
-
 
     }
 
@@ -482,6 +525,8 @@ class get_Questions_State extends  State<get_QuestionsTask> {
 
 
 Future<String> get_answer(context)async {
+    String jobneedid = widget.myObject;
+
     print("get numeric======" + numeric);
     print("get singleline======" + singleline);
     print("get multiline======" + multiline);
@@ -491,43 +536,56 @@ Future<String> get_answer(context)async {
     //print( "get dropdown===="     + currentvalue );
     print("get yes/no====" + _textResult);
     print("get rating====" + uRating.toString());
-    //print( "get jobneedid===="    + prefs.get('jobneedid'));
+    print( "get jobneedid===="    + jobneedid);
 
 
     for (int indx = 0; indx <= JndList.length - 1; indx++) {
         print("========-------------------=========");
-        print("ans:" + JndList[indx].Answer);
+        print("ans:" + JndList[indx].answer);
         print("cdtz:" + JndList[indx].cdtz);
         print("cuser:" + JndList[indx].cuser.toString());
-            print("mdtz:" + JndList[indx].mdtz);
-            print("muser:" + JndList[indx].muser.toString());
-            print("jndid:" + JndList[indx].jndid.toString());
-            print("jobneedid:" + JndList[indx].jobneedid.toString());
-            print("min:" + JndList[indx].Min);
-            print("max:" + JndList[indx].Max);
-            print("option:" + JndList[indx].option);
-            print("questionid:" + JndList[indx].questionid.toString());
-            print("type:" + JndList[indx].type.toString());
-    }
-}
+        print("mdtz:" + JndList[indx].mdtz);
+        print("muser:" + JndList[indx].muser.toString());
+        print("jndid:" + JndList[indx].jndid.toString());
+        print("jobneedid:" + JndList[indx].jobneedid.toString());
+        print("min:" + JndList[indx].min);
+        print("max:" + JndList[indx].max);
+        print("option:" + JndList[indx].option);
+        print("questionid:" + JndList[indx].questionid.toString());
+        print("type:" + JndList[indx].type.toString());
 
-/*        Jobneeddetails_DAO questionAnsTransaction = new Jobneeddetails_DAO(
-            JndList[indx].Answer, JndList[indx].cdtz,
-            JndList[indx].cuser, JndList[indx].mdtz,
-            JndList[indx].muser, JndList[indx].jndid,
-            JndList[indx].jobneedid, JndList[indx].min,
-            JndList[indx].max, JndList[indx].option,
-            JndList[indx].questionid, JndList[indx].type,
-            "0", JndList[indx].questionname
+        dbHelper.UpdateJndTable("JOBNeedDetails", JndList[indx].answer, JndList[indx].cdtz, JndList[indx].jndid );
+
+
+        Jobneeddetails_DAO questionAnsTransaction = new Jobneeddetails_DAO(
+            JndList[indx].jndid,
+            JndList[indx].jobneedid,
+            JndList[indx].seqno,
+            JndList[indx].questionid,
+            JndList[indx].answer,
+            JndList[indx].min,
+            JndList[indx].max,
+            JndList[indx].option,
+            JndList[indx].alerton,
+            JndList[indx].type,
+            JndList[indx].cdtz,
+            JndList[indx].mdtz,
+            JndList[indx].cuser,
+            JndList[indx].muser,
+            JndList[indx].ismandatory
         );
 
         //database.reference().child(prefs.get('deviceid')).child('jnd').child(questAnsTransList[indx].jndid).set(questAnsTransList);
 
         //ref.child(prefs.get('deviceid')).child('jnd').child(questAnsTransList[indx].jndid).set(questionAnsTransaction);
-        await ref.child(prefs.get('deviceid')).child('jnd').child(questAnsTransList[indx].jndid).set(questionAnsTransaction.toJson());
+        //await ref.child(prefs.get('deviceid')).child('jnd').child(questAnsTransList[indx].jndid).set(questionAnsTransaction.toJson());
     }
 
-    JobneedAnsTransaction jobneedAnsTransaction = new JobneedAnsTransaction(
+    await dbHelper.UpdateJobneedTable("Jobneed", "1", "30 ",DateTime.now().toString(), jobneedid);
+
+    UploadTourTask1(jobneedid);
+
+/*    JobneedAnsTransaction jobneedAnsTransaction = new JobneedAnsTransaction(
         "-1", prefs.get('assetid').toString(), "0", prefs.get('siteid'), f.format(new DateTime.now()),
         "330", prefs.get('peopleid').toString(), f.format(new DateTime.now()), f.format(new DateTime.now()),
         "-1", "", "0", "-1", "10", "Adhoc Task Checkpoint : " + prefs.get('assetcode'), "-1",
@@ -546,6 +604,9 @@ Future<String> get_answer(context)async {
         context,
         new MaterialPageRoute(
             builder: (BuildContext context) =>
-            new ShowDataPageTask()));
-}*/
+            new ShowDataPageTask()));*/
+    }
+
 }
+
+

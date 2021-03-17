@@ -203,7 +203,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
     print(userData.toJson());
     print("========================");
     getresponse(userdata, "Question");
-    //getquestionsetmodifiedafter();
+    getquestionsetmodifiedafter();
   }
 
   getquestionsetmodifiedafter() async {
@@ -251,7 +251,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
     print(userData.toJson());
     print("========================");
     getresponse(userdata, "QsetBelonging");
-    getticketmodifiedafter();
+    //getticketmodifiedafter();
   }
 
   getticketmodifiedafter() async {
@@ -516,8 +516,11 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
             await dbHelper.insert(tablename, test);
 
             break;
-          case 'jnd':
+          case 'JOBNeedDetails':
             //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["jndid"]).set(test);
+            await dbHelper.insert(tablename, test);
+
+
             break;
           case 'AssetDetails':
             //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["assetid"]).set(test);
@@ -525,50 +528,40 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
 
             break;
           case 'People':
-            //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["peopleid"]).set(test);
             print("tablename" + tablename);
             await dbHelper.insert(tablename, test);
 
             break;
           case 'peoplegroup':
-            //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["groupid"]).set(test);
             await dbHelper.insert(tablename, test);
 
             break;
-          case 'qsetbelonging':
-            //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["qsbid"]).set(test);
-            await dbHelper.insert(tablename, test);
 
-            break;
           case 'Question':
-            //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["questionid"]).set(test);
             await dbHelper.insert(tablename, test);
 
             break;
-          case 'questionset':
-            //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["questionsetid"]).set(test);
+          case 'QuestionSet':
+            await dbHelper.insert(tablename, test);
+
+            break;
+          case 'QsetBelonging':
             await dbHelper.insert(tablename, test);
 
             break;
           case 'ticket':
-            //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["jobneedid"]).set(test);
             break;
           case 'typeassist':
-            //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["taid"]).set(test);
             await dbHelper.insert(tablename, test);
 
             break;
           case 'address':
-            //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["addressid"]).set(test);
             break;
           case 'siteslist':
-            //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["buid"]).set(test);
             break;
           case 'siteinfo':
-            //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["contractid"]).set(test);
             break;
           case 'template':
-            //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["questionsetid"]).set(test);
             break;
         }
       }
@@ -588,7 +581,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
 
       ss = jid.toString().substring(0, (jid.toString().length - 1));
       print("ss: " + ss);
-      //getjndmodifiedafter(ss);
+      getjndmodifiedafter(ss);
     }
     var count = await dbHelper.queryRowCount(tablename);
 
@@ -844,11 +837,9 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
                                   ),
                                   /*highlightColor: Colors.pink,*/
                                   onPressed: () {
-                                    Navigator.of(context)
-                                        .push<void>(SwipeablePageRoute(
-                                      builder: (_) => get_QuestionsTask(),
-                                    ));
-                                  }),
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => get_QuestionsTask(myObject: this.JobneedList[position].jobneedid.toString())));
+                                  } ),
                               trailing: Icon(
                                 Icons.arrow_forward_ios,
                                 color: Colors.white,
@@ -867,7 +858,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
                                 "Plan Date: " +
                                     /*"Task Name: " +*/ this
                                         .JobneedList[position]
-                                        .plandatetime
+                                        .cdtz
                                         .toString() +
                                     "\nEnd Date :" +
                                     this
