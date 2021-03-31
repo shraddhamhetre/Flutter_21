@@ -20,7 +20,6 @@ class get_QuestionsTask extends StatefulWidget {
     String myObject;
     get_QuestionsTask({
         this.myObject
-
     });
     @override
     get_Questions_State createState() => new get_Questions_State();
@@ -36,6 +35,8 @@ final TextEditingController _email = new TextEditingController();
 final TextEditingController _time =  new TextEditingController();
 final TextEditingController _multiline = new TextEditingController();
 final TextEditingController _singleline = new TextEditingController();
+
+GlobalKey<FormState> _questionFormKey = GlobalKey<FormState>();
 
 String  get email => _email.text;
 String  get multiline => _multiline.text;
@@ -135,8 +136,6 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                     _textResult = 'Yes';
                     print(_textResult);
 
-
-
                     break;
                 case 1:
                     _textResult = 'No';
@@ -218,7 +217,6 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                                             onRatingChanged: (rating) => setState(
                                                                     () {
                                                                     uRating = rating;
-
                                                                     JndList[index].answer= rating.toString();
                                                                     JndList[index].cdtz= DateTime.now().millisecondsSinceEpoch.toString();
                                                                     //questAnsTransList[index].answer= rating.toString();
@@ -244,21 +242,22 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                                 child: new Text( QuestionList[i].questionname,
                                                     style: new TextStyle(
                                                         fontSize: 15.0 , color: Colors.black ) , ) ,),
-                                            new TextField(controller: _email,decoration: new InputDecoration(hintText: "Email Id"),keyboardType: TextInputType.emailAddress,
+                                            new TextFormField(controller: _email,decoration: new InputDecoration(hintText: "Email Id"),keyboardType: TextInputType.emailAddress,
+                                                validator: (value){if(value.isEmpty){return '*Required';}else{return null;}},
                                                 onChanged: (email1) => setState(
                                                         () {
                                                         email1 = email;
                                                         JndList[index].answer= email1.toString();
                                                         JndList[index].cdtz= DateTime.now().millisecondsSinceEpoch.toString();
                                                         print("rating=====:"+ email1.toString());
-                                                    },),)
-
+                                                    },
+                                                ),
+                                            )
                                         ],
                                     );
                                 }
                                 break;
                             case "48":
-
                                 //Checkbox type
                                 {
                                     return Column(
@@ -277,8 +276,6 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                                 onPressed: () => _selectDate(context, index),
                                                 child:  Text(currentDate.toString())
                                             ),
-
-
                                         ],
                                     );
                                 }
@@ -365,7 +362,8 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                                 child: new Text( QuestionList[i].questionname,
                                                     style: new TextStyle(
                                                         fontSize: 15.0 , color: Colors.black ) , ) ,),
-                                            new TextField(controller: _singleline, decoration: new InputDecoration(hintText: "Answer"),
+                                            new TextFormField(controller: _singleline, decoration: new InputDecoration(hintText: "Answer"),
+                                                validator: (value){if(value.isEmpty){return '*Required';}else{return null;}},
                                                 onChanged: (singleline1) => setState(
                                                         () {
                                                         singleline1 = singleline;
@@ -388,7 +386,8 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                                 child: new Text( QuestionList[i].questionname,
                                                     style: new TextStyle(
                                                         fontSize: 15.0 , color: Colors.black ) , ) ,),
-                                            new TextField(controller: _multiline, decoration: new InputDecoration(hintText: "Answer"),keyboardType: TextInputType.multiline,
+                                            new TextFormField(controller: _multiline, decoration: new InputDecoration(hintText: "Answer"),keyboardType: TextInputType.multiline,
+                                                validator: (value){if(value.isEmpty){return '*Required';}else{return null;}},
                                                 maxLines: null,
                                                 onChanged: (multiline1) => setState(
                                                         () {
@@ -411,11 +410,13 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                                                 child: new Text( QuestionList[i].questionname,
                                                     style: new TextStyle(
                                                         fontSize: 15.0 , color: Colors.white ) , ) ,),
-                                            new TextField( controller: _numeric, decoration: new InputDecoration(hintText: option.toString()), keyboardType: TextInputType.number,
+                                            new TextFormField( controller: _numeric, decoration: new InputDecoration(hintText: option.toString()), keyboardType: TextInputType.number,
+                                                validator: (numeric){
+                                                if(numeric.isEmpty){return '*Required';} else{return null;}},
                                                 cursorColor: Colors.white,
                                                 onChanged: (numeric1) => setState(
                                                         () {
-                                                        numeric1 = numeric;
+                                                        numeric1 = numeric.toString();
                                                         JndList[index].answer= numeric1.toString();
                                                         JndList[index].cdtz= DateTime.now().millisecondsSinceEpoch.toString();
                                                         print("numeric=====:"+ numeric1.toString());
@@ -428,59 +429,62 @@ class get_Questions_State extends  State<get_QuestionsTask> {
                         //return (qname + " " + type);
                     }
                 }
-
     }
-
 
     @override
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(title: Text("QUESTION"),),
             floatingActionButton: FloatingActionButton(
-                onPressed: () =>  get_answer(context),
+                onPressed: () {
+                    if(_questionFormKey.currentState.validate()){get_answer(context);}
+                    },
                 child: Text("Submit", style: TextStyle(fontSize: 10.0),),
                 backgroundColor: Colors.blue,
             ),
             body: SizedBox.expand(
                 child: Container(
                     color: Color(0xff404040),
-                    child: FutureBuilder<List>(
-                        //future: updateListView(),
-                        initialData: List(),
-                        builder: (context, snapshot) {
-                            return snapshot.hasData
-                                ? ListView.builder(
-                                itemCount: JndList.length,
-                                itemBuilder: (_, int position) {
-                                    return Container(
-                                        child: new Card(
-                                            child: GestureDetector(
-                                                onTap: () => Null,
-                                                child: new Column(
-                                                    crossAxisAlignment: CrossAxisAlignment
-                                                        .start,
-                                                    mainAxisAlignment: MainAxisAlignment
-                                                        .center,
-                                                    children: <Widget>[
-                                                        new Padding(
-                                                            padding: EdgeInsets
-                                                                .all(10.0),
-                                                            child: getQuestion(
-                                                                JndList[position]
-                                                                    .questionid,
-                                                                position),
-                                                        ),
-                                                    ],
-                                                ),
-                                            ),
-                                        ),
-                                    );
-                                },
-                            )
-                                : Center(
-                                child: CircularProgressIndicator(),
-                            );
-                        },
+                    child: Form(
+                        key: _questionFormKey,
+                      child: FutureBuilder<List>(
+                          //future: updateListView(),
+                          initialData: List(),
+                          builder: (context, snapshot) {
+                              return snapshot.hasData
+                                  ? ListView.builder(
+                                  itemCount: JndList.length,
+                                  itemBuilder: (_, int position) {
+                                      return Container(
+                                          child: new Card(
+                                              child: GestureDetector(
+                                                  onTap: () => Null,
+                                                  child: new Column(
+                                                      crossAxisAlignment: CrossAxisAlignment
+                                                          .start,
+                                                      mainAxisAlignment: MainAxisAlignment
+                                                          .center,
+                                                      children: <Widget>[
+                                                          new Padding(
+                                                              padding: EdgeInsets
+                                                                  .all(10.0),
+                                                              child: getQuestion(
+                                                                  JndList[position]
+                                                                      .questionid,
+                                                                  position),
+                                                          ),
+                                                      ],
+                                                  ),
+                                              ),
+                                          ),
+                                      );
+                                  },
+                              )
+                                  : Center(
+                                  child: CircularProgressIndicator(),
+                              );
+                          },
+                      ),
                     ),
                 ),
             ),
@@ -527,7 +531,7 @@ class get_Questions_State extends  State<get_QuestionsTask> {
 Future<String> get_answer(context)async {
     String jobneedid = widget.myObject;
 
-    print("get numeric======" + numeric);
+    print("get numeric======" + numeric.toString());
     print("get singleline======" + singleline);
     print("get multiline======" + multiline);
     print("get date1======" + date1);
@@ -555,33 +559,13 @@ Future<String> get_answer(context)async {
         print("type:" + JndList[indx].type.toString());
 
         dbHelper.UpdateJndTable("JOBNeedDetails", JndList[indx].answer, JndList[indx].cdtz, JndList[indx].jndid );
-
-
-        Jobneeddetails_DAO questionAnsTransaction = new Jobneeddetails_DAO(
-            JndList[indx].jndid,
-            JndList[indx].jobneedid,
-            JndList[indx].seqno,
-            JndList[indx].questionid,
-            JndList[indx].answer,
-            JndList[indx].min,
-            JndList[indx].max,
-            JndList[indx].option,
-            JndList[indx].alerton,
-            JndList[indx].type,
-            JndList[indx].cdtz,
-            JndList[indx].mdtz,
-            JndList[indx].cuser,
-            JndList[indx].muser,
-            JndList[indx].ismandatory
-        );
-
         //database.reference().child(prefs.get('deviceid')).child('jnd').child(questAnsTransList[indx].jndid).set(questAnsTransList);
 
         //ref.child(prefs.get('deviceid')).child('jnd').child(questAnsTransList[indx].jndid).set(questionAnsTransaction);
         //await ref.child(prefs.get('deviceid')).child('jnd').child(questAnsTransList[indx].jndid).set(questionAnsTransaction.toJson());
     }
 
-    await dbHelper.UpdateJobneedTable("Jobneed", "1", "30 ",DateTime.now().toString(), jobneedid);
+    await dbHelper.UpdateJobneedTable("Jobneed", "1", "30", DateTime.now(), jobneedid);
 
     UploadTourTask1(jobneedid);
 

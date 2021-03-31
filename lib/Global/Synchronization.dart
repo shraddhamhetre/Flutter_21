@@ -1,14 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ffi';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:intelliwiz21/Activities/ScanQr.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intelliwiz21/Activities/Question_List.dart';
+import 'package:intelliwiz21/Activities/Camera_Activity.dart';
+import 'package:intelliwiz21/Activities/Task_List.dart';
 import 'package:intelliwiz21/Models/Jobneed_DAO.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:sqflite/sqflite.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 import '../Logout.dart';
+import 'Common_Function.dart';
 import 'Database.dart';
 import 'GlobalVariable.dart';
 
@@ -21,6 +26,8 @@ StringBuffer jid;
 String ss;
 
 SharedPreferences prefs;
+List<CameraDescription> cameras;
+
 
 class Sync extends StatefulWidget {
   @override
@@ -32,6 +39,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
   List<Jobneed_DAO> JobneedList;
   int count = 0;
 
+
   final dbHelper = DatabaseHelper.instance;
 
   int _selectedIndex = 0;
@@ -41,6 +49,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
     Text('Index 3: panic'),
     Logout(),
   ];
+
 
   void _onItemTapped(int index) {
     print("===ontapped called" + index.toString());
@@ -52,9 +61,17 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
   static const _tabCount = 6;
   TabController _tabController;
 
+   getCameras()async{
+       cameras = await availableCameras();
+
+  }
+
+
+
   @override
   void initState() {
     super.initState();
+    getCameras();
     _tabController = TabController(length: _tabCount, vsync: this);
     //getgetassetdetails();
     //getpeoplemodifiedafter();
@@ -591,6 +608,23 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
     //updateListView();
   }
 
+  checkJobStarted(String StartTime, String EndTime){
+    String check =IsJobStarts(StartTime, EndTime);
+    print("checkJobStarted called : ");
+    switch (check) {
+      case '0':
+        return print("Start job");
+        break;
+      case '1':
+        return Fluttertoast.showToast(msg: "Job has not started", toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER,);
+        break;
+      case '2':
+        return Fluttertoast.showToast(msg: "Job has expired", toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER,);
+        break;
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     if (JobneedList == null) {
@@ -686,6 +720,12 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
                                     color: Color(0xffffffff),
                                   ),
                                 ),
+                                  onTap: (){
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => task_List(),
+                                          )
+                                      );
+                                  }
                               ),
                               ListTile(
                                 title: Text(
@@ -782,6 +822,12 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
                                     color: Color(0xffffffff),
                                   ),
                                 ),
+                                onTap: (){
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) => CameraScreen(),
+                                      )
+                                  );
+                                }
                               ),
                               ListTile(
                                 title: Text(
@@ -811,7 +857,9 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
           ),
         ),
         body: SizedBox.expand(
+
           child: Container(
+
             /*color: Color(0xff404040),*/
             child: FutureBuilder<List>(
               future: updateListView(),
@@ -828,6 +876,12 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
                             ),
                             child: ListTile(
                               isThreeLine: true,
+                              onTap: ()=>
+                                  checkJobStarted(convert_Server_Datetime(this
+                                  .JobneedList[position]
+                                  .plandatetime.toString()), convert_Server_Datetime(this
+                                  .JobneedList[position]
+                                  .expirydatetime.toString())),
                               /*tileColor: Color(0xff514e4e),*/
                               leading: new IconButton(
                                   icon: new Icon(
@@ -855,16 +909,13 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
                                     fontWeight: FontWeight.bold),
                               ),
                               subtitle: Text(
-                                "Plan Date: " +
-                                    /*"Task Name: " +*/ this
+                                "Plan Date: " + convert_Server_Datetime(this
+                                    .JobneedList[position]
+                                    .plandatetime.toString()) +
+                                    "\nEnd Date:  " +
+                                    convert_Server_Datetime(this
                                         .JobneedList[position]
-                                        .cdtz
-                                        .toString() +
-                                    "\nEnd Date :" +
-                                    this
-                                        .JobneedList[position]
-                                        .expirydatetime
-                                        .toString(),
+                                        .expirydatetime.toString()),
                                 style: TextStyle(
                                     color: Colors.white.withOpacity(0.7),
                                     fontWeight: FontWeight.w100),

@@ -9,11 +9,8 @@ import 'package:intelliwiz21/Models/Jobneeddetails_DAO.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-
-
 List<UploadJobneedParameter>uploaddataList = [];
 SharedPreferences prefs ;
-
 
 Future UploadTourTask1(String jobneedid)async{
     prefs=await SharedPreferences.getInstance();
@@ -22,7 +19,7 @@ Future UploadTourTask1(String jobneedid)async{
     List<UploadJNDData> jndUploadList = [];
     var jndDetails= [];
 
-    List<Jobneed_DAO> jobneedlist = await dbHelper.getJobneedListSync("Jobneed", jobneedid);
+    List<Jobneed_DAO> jobneedlist = await dbHelper.getJobneedListSync("Jobneed", jobneedid, "jobneedid");
     List<Jobneeddetails_DAO> jobneeddetaillist = await dbHelper.getJNDList("JOBNeedDetails", jobneedid);
 
     print("Sync Jobneed count called:"+ jobneedlist.length.toString());

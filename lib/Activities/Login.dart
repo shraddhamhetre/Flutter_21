@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 //import 'package:fluttertoast/fluttertoast.dart';
@@ -299,7 +300,7 @@ class HomePageState extends State<HomePage> {
       ));*/
     } else {
       print(decoded['msg']);
-      //Fluttertoast.showToast(msg: decoded['msg'], toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER,);
+      Fluttertoast.showToast(msg: decoded['msg'], toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER,);
     }
 
     //}

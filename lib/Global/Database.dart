@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:intelliwiz21/Models/Jobneed_DAO.dart';
 import 'package:intelliwiz21/Models/Jobneeddetails_DAO.dart';
+import 'package:intelliwiz21/Models/Pelog_DAO.dart';
 import 'package:intelliwiz21/Models/QuestionSetBelong_DAO.dart';
 import 'package:intelliwiz21/Models/QuestionSet_DAO.dart';
 import 'package:intelliwiz21/Models/Question_DAO.dart';
@@ -11,6 +12,7 @@ import 'package:intelliwiz21/Tables/Geofence_Table.dart';
 import 'package:intelliwiz21/Tables/Group_Table.dart';
 import 'package:intelliwiz21/Tables/JobneedDetails_Table.dart';
 import 'package:intelliwiz21/Tables/Jobneed_Table.dart';
+import 'package:intelliwiz21/Tables/PeopleEventLog_Table.dart';
 import 'package:intelliwiz21/Tables/PeopleGroupBelong_Table.dart';
 import 'package:intelliwiz21/Tables/People_Table.dart';
 import 'package:intelliwiz21/Tables/QuestionSetBelong_Table.dart';
@@ -57,6 +59,7 @@ class DatabaseHelper {
     final siteinfo = SitesInfo_Table();
     final template = TemplateList_Table();
     final assignedsitepeople = AssignedSitePeople_Table();
+    final peopleeventlog = PeopleEventLog_Table();
 
 
 
@@ -92,10 +95,7 @@ class DatabaseHelper {
     // SQL code to create the database table
     Future _onCreate1(Database db, int version) async {
         print("Database ==== 3");
-
-
         await CreateTables(db);
-
     }
 
     Future CreateTables(Database db)async{
@@ -117,6 +117,7 @@ class DatabaseHelper {
         await siteinfo.OnCreate(db);
         await template.OnCreate(db);
         await assignedsitepeople.OnCreate(db);
+        await peopleeventlog.OnCreate(db);
 
     }
 
@@ -165,9 +166,9 @@ class DatabaseHelper {
         return result.toList();
     }
 
-    Future<List> getSelectedRecords(String dbTable, String jobneedid) async {
+    Future<List> getSelectedRecords(String dbTable, String jobneedid, String column) async {
         Database db = await instance.database;
-        var result = await db.rawQuery("SELECT * FROM $dbTable where jobneedid = $jobneedid");
+        var result = await db.rawQuery("SELECT * FROM $dbTable where $column = $jobneedid");
 
         print("Result list getSelectedRecords : "+ result.length.toString());
 
@@ -175,9 +176,9 @@ class DatabaseHelper {
     }
 
 
-    Future<List<Jobneed_DAO>> getJobneedListSync(String dbTable, String jobneedid) async {
+    Future<List<Jobneed_DAO>> getJobneedListSync(String dbTable, String jobneedid, String column) async {
 
-        var todoMapList = await getSelectedRecords(dbTable, jobneedid);
+        var todoMapList = await getSelectedRecords(dbTable, jobneedid, column);
 
 
         int count = todoMapList.length;
@@ -192,6 +193,24 @@ class DatabaseHelper {
         }
         //print("JobneedList length: "+ JobneedList.length.toString());
         return JobneedList;
+    }
+    Future<List<PeopleEventLog_DAO>> getPELOGListSync(String dbTable, String pelogid, String column) async {
+
+        var todoMapList = await getSelectedRecords(dbTable, pelogid, column);
+
+
+        int count = todoMapList.length;
+
+        //print("getTodoList length: "+ count.toString());
+
+        List<PeopleEventLog_DAO> PelogList = List<PeopleEventLog_DAO>();
+        // For loop to create a 'todo List' from a 'Map List'
+        for (int i = 0; i < count; i++) {
+
+            PelogList.add(PeopleEventLog_DAO.fromMapObject(todoMapList[i]));
+        }
+        //print("JobneedList length: "+ JobneedList.length.toString());
+        return PelogList;
     }
 
     Future<List<Map<String, dynamic>>> getTodoMapList(String dbTable) async {

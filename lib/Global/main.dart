@@ -1,9 +1,12 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:intelliwiz21/Activities/Login.dart';
 
 import '../Activities/Splash.dart';
 
-void main() {
+Future<void> main() async {
+
+
   runApp(MyApp());
 }
 

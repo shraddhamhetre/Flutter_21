@@ -28,7 +28,7 @@ class PeopleEventLog_Table {
     final String PE_MDTZ = "mdtz";
     final String PE_BUID = "buid";
     final String PE_SYNCSTATUS = "syncStatus";
-    final String PE_SCAN_PEOPLECODE = "scanPeopleCode";
+   // final String PE_SCAN_PEOPLECODE = "scanPeopleCode";
 
     final String PE_TRANSPORTMODE = "transportmode";
     final String PE_EXPENCES = "expamt";
@@ -36,6 +36,8 @@ class PeopleEventLog_Table {
     final String PE_DISTANCE = "distance";
     final String PE_REFERENCE = "reference";
     final String PE_REMARKS = "remarks";
+    final String PE_CTZOFFSET = "ctzoffset";
+
 
     final String PE_OTHERLOCATION = "otherlocation";
 
@@ -45,6 +47,8 @@ class PeopleEventLog_Table {
     final String ID_TYPE = "INTEGER PRIMARY KEY AUTOINCREMENT";
 
     OnCreate(Database db) async {
+
+        print("1 :creating peopleeventlog table");
         await db.execute('''
           CREATE TABLE $TABLE_NAME (
             $PE_LOGID INTEGER NOT NULL,
@@ -67,7 +71,6 @@ class PeopleEventLog_Table {
             $PE_MUSER INTEGER NOT NULL,
             $PE_MDTZ TEXT NOT NULL,
             $PE_GFID INTEGER NOT NULL,
-            $PE_SCAN_PEOPLECODE TEXT NOT NULL,
             $PE_TRANSPORTMODE INTEGER NOT NULL,
             $PE_EXPENCES TEXT NOT NULL,
             $PE_DURATION INTEGER NOT NULL,
@@ -75,8 +78,11 @@ class PeopleEventLog_Table {
             $PE_REFERENCE TEXT NOT NULL,
             $PE_REMARKS TEXT NOT NULL,
             $PE_OTHERLOCATION TEXT NOT NULL,
-            $PE_CDTZ TEXT NOT NULL
+            $PE_CDTZ TEXT NOT NULL,
+            $PE_CTZOFFSET TEXT NOT NULL
           )
           ''');
+        print("2 :done creating peopleeventlog table");
+
     }
 }

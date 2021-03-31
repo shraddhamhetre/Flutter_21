@@ -53,6 +53,7 @@ class UploadJobneedParameter{
         };
     }
 }
+
 class UploadJNDData{
     String jobneedid, answer, jndid, questionid, type, parent, seqno;
     UploadJNDData(this.jobneedid, this.answer, this.jndid, this.questionid, this.type, this.parent, this.seqno);
@@ -88,6 +89,106 @@ class UploadParameter{
             "\"password\""    : '"'+password+'"',
             "\"tzoffset\""    : '"'+tzoffset+'"',
             "\"deviceid\""    : '"'+deviceid+'"'
+        };
+    }
+}
+
+class PeopleEventLog{
+    String pelogid, accuracy, deviceid, datetime, gpslocation, photorecognitionthreshold, photorecognitionscore,
+        photorecognitiontimestamp,  photorecognitionserviceresponse, facerecognition, peopleid, peventtype,
+        punchstatus, verifiedby, gfid, buid, cuser, muser, cdtz, mdtz, transportmode, expamt, duration, reference,
+        remarks, distance, ctzoffset, otherlocation, syncstatus;
+    PeopleEventLog(this.pelogid, this.accuracy, this.deviceid, this.datetime, this.gpslocation, this.photorecognitionthreshold,
+        this.photorecognitionscore, this.photorecognitiontimestamp,  this.photorecognitionserviceresponse, this.facerecognition,
+        this.peopleid, this.peventtype, this.punchstatus, this.verifiedby, this.gfid, this.buid, this.cuser, this.muser, this.cdtz,
+        this.mdtz, this.transportmode, this.expamt, this.duration, this.reference, this.remarks, this.distance, this.ctzoffset, this.otherlocation,this.syncstatus);
+    toJson() {
+        return {
+            "pelogid": pelogid,
+            "accuracy": accuracy,
+            "deviceid": deviceid,
+            "datetime": datetime,
+            "gpslocation": gpslocation,
+            "photorecognitionthreshold": photorecognitionthreshold,
+            "photorecognitionscore": photorecognitionscore,
+            "photorecognitiontimestamp": photorecognitiontimestamp,
+            "photorecognitionserviceresponse": photorecognitionserviceresponse,
+            "facerecognition": facerecognition,
+            "peopleid": peopleid,
+            "peventtype": peventtype,
+            "punchstatus": punchstatus,
+            "verifiedby": verifiedby,
+            "gfid": gfid,
+            "buid": buid,
+            "cuser": cuser,
+            "muser": muser,
+            "cdtz": cdtz,
+            "mdtz": mdtz,
+            "transportmode": transportmode,
+            "expamt": expamt,
+            "duration": duration,
+            "reference": reference,
+            "remarks": remarks,
+            "distance": distance,
+            "ctzoffset": ctzoffset,
+            "otherlocation": otherlocation,
+            "syncstatus": syncstatus
+
+        };
+    }
+}
+class PeopleEventLogUp{
+    String pelogid, accuracy, deviceid, datetime, gpslocation, photorecognitionthreshold, photorecognitionscore,
+        photorecognitiontimestamp,  photorecognitionserviceresponse, facerecognition, peopleid, peventtype,
+        punchstatus, verifiedby, gfid, buid, cuser, muser, cdtz, mdtz, transportmode, expamt, duration, reference,
+        remarks, distance, ctzoffset, otherlocation, syncstatus;
+    PeopleEventLogUp(this.pelogid, this.accuracy, this.deviceid, this.datetime, this.gpslocation, this.photorecognitionthreshold,
+        this.photorecognitionscore, this.photorecognitiontimestamp,  this.photorecognitionserviceresponse, this.facerecognition,
+        this.peopleid, this.peventtype, this.punchstatus, this.verifiedby, this.gfid, this.buid, this.cuser, this.muser, this.cdtz,
+        this.mdtz, this.transportmode, this.expamt, this.duration, this.reference, this.remarks, this.distance, this.ctzoffset, this.otherlocation,this.syncstatus);
+    toJson() {
+        return {
+            "\"pelogid\"": pelogid,
+            "\"accuracy\"": accuracy,
+            "\"deviceid\"": deviceid,
+            "\"datetime\"": "\""+datetime+"\"",
+            "\"gpslocation\"": "\""+gpslocation+"\"",
+            "\"photorecognitionthreshold\"": photorecognitionthreshold,
+            "\"photorecognitionscore\"": photorecognitionscore,
+            "\"photorecognitiontimestamp\"": "\""+photorecognitiontimestamp+"\"",
+            "\"photorecognitionserviceresponse\"": "\""+photorecognitionserviceresponse+"\"",
+            "\"facerecognition\"": "\""+facerecognition+"\"",
+            "\"peopleid\"": peopleid,
+            "\"peventtype\"": peventtype,
+            "\"punchstatus\"": punchstatus,
+            "\"verifiedby\"": verifiedby,
+            "\"gfid\"": gfid,
+            "\"buid\"": buid,
+            "\"cuser\"": cuser,
+            "\"muser\"": muser,
+            "\"cdtz\"": "\""+cdtz+"\"",
+            "\"mdtz\"": "\""+mdtz+"\"",
+            "\"transportmode\"": transportmode,
+            "\"expamt\"": expamt,
+            "\"duration\"": duration,
+            "\"reference\"": "\""+reference+"\"",
+            "\"remarks\"": "\""+remarks+"\"",
+            "\"distance\"": distance,
+            "\"ctzoffset\"": ctzoffset,
+            "\"otherlocation\"": "\""+otherlocation+"\"",
+            "\"syncstatus\"": syncstatus
+
+        };
+    }
+}
+class UploadInfoParameter{
+    String mail, event;
+
+    UploadInfoParameter(this.mail, this.event);
+    toJson() {
+        return {
+            "\"mail\"": "\""+mail+"\"",
+            "\"event\"": "\""+event+"\"",
         };
     }
 }

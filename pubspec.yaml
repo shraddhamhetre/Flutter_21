@@ -32,6 +32,11 @@ dependencies:
   fluttertoast:
   qrscan: ^0.2.22
   flutter_rating:
+  camera:
+  image_picker:
+  draggable_floating_button: ^0.1.1
+  qr_code_scanner: ^0.4.0
+
 
 
 
