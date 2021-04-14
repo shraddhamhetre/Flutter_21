@@ -10,8 +10,8 @@ class QuestionSetBelong_DAO {
   String _isdeleted;
   int _cuser;
   int _muser;
-  String _Min;
-  String _Max;
+  String _min;
+  String _max;
   String _alertOn;
   String _option;
   int _buid;
@@ -27,8 +27,8 @@ class QuestionSetBelong_DAO {
       this._isdeleted,
       this._cuser,
       this._muser,
-      this._Min,
-      this._Max,
+      this._min,
+      this._max,
       this._alertOn,
       this._option,
       this._buid);
@@ -45,8 +45,8 @@ class QuestionSetBelong_DAO {
       this._isdeleted,
       this._cuser,
       this._muser,
-      this._Min,
-      this._Max,
+      this._min,
+      this._max,
       this._alertOn,
       this._option,
       this._buid);
@@ -62,8 +62,8 @@ class QuestionSetBelong_DAO {
   String get isdeleted => _isdeleted;
   int get cuser => _cuser;
   int get muser => _muser;
-  String get Min => _Min;
-  String get Max => _Max;
+  String get min => _min;
+  String get max => _max;
   String get alertOn => _alertOn;
   String get option => _option;
   int get buid => _buid;
@@ -108,12 +108,12 @@ class QuestionSetBelong_DAO {
     this._muser = newmuser;
   }
 
-  set Min(String newMin) {
-    this._Min = newMin;
+  set min(String newmin) {
+    this._min = newmin;
   }
 
-  set Max(String newMax) {
-    this._Max = newMax;
+  set max(String newmax) {
+    this._max = newmax;
   }
 
   set alertOn(String newalertOn) {
@@ -144,8 +144,8 @@ class QuestionSetBelong_DAO {
     map['isdeleted'] = _isdeleted;
     map['cuser'] = _cuser;
     map['muser'] = _muser;
-    map['Min'] = _Min;
-    map['Max'] = _Max;
+    map['min'] = _min;
+    map['max'] = _max;
     map['alertOn'] = _alertOn;
     map['option'] = _option;
     map['buid'] = _buid;
@@ -165,8 +165,8 @@ class QuestionSetBelong_DAO {
     this._isdeleted = map['isdeleted'];
     this._cuser = map['cuser'];
     this._muser = map['muser'];
-    this._Min = map['Min'];
-    this._Max = map['Max'];
+    this._min = map['min'];
+    this._max = map['max'];
     this._alertOn = map['alertOn'];
     this._option = map['option'];
     this._buid = map['buid'];

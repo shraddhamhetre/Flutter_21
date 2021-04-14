@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intelliwiz21/Activities/Incident_Report.dart';
 import 'package:intelliwiz21/Activities/Question_List.dart';
 import 'package:intelliwiz21/Activities/Camera_Activity.dart';
+import 'package:intelliwiz21/Activities/Scan_qr.dart';
 import 'package:intelliwiz21/Activities/Task_List.dart';
 import 'package:intelliwiz21/Models/Jobneed_DAO.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -73,9 +74,10 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
     super.initState();
     getCameras();
     _tabController = TabController(length: _tabCount, vsync: this);
-    //getgetassetdetails();
+    getgetassetdetails();
     //getpeoplemodifiedafter();
-    getjobneedmodifiedafter();
+    //getjobneedmodifiedafter();
+    //getqsetbelongingmodifiedafter();
   }
 
   //SimData simData;
@@ -253,8 +255,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
 
     userData = new UserData();
     userData.servicename = "Select";
-    userData.query =
-        "select * from getqsetbelongingmodifiedafter('1970-01-01 00:00:00', " +
+    userData.query = "select * from getqsetbelongingmodifiedafter_042021('1970-01-01 00:00:00', " +
             prefs.get('siteid') +
             "," +
             prefs.get('clientid') +
@@ -468,8 +469,10 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
       'tzoffset': userData.tzoffset,
       'deviceid': userData.deviceid,
     };
+    var url = Uri.parse(GlobalVariable().getServerUrl());
+
     http.Response response = await http.post(
-      Uri.encodeFull(GlobalVariable().getServerUrl()),
+      url,
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/x-www-form-urlencoded"
@@ -541,7 +544,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
             break;
           case 'AssetDetails':
             //database.reference().child(prefs.get('deviceid')).child(tablename).child(test["assetid"]).set(test);
-            //await dbHelper.insert(tablename, test);
+            await dbHelper.insert(tablename, test);
 
             break;
           case 'People':
@@ -640,7 +643,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: MorphingAppBar(
-          /*backgroundColor: Color(0xff404040),*/
+          backgroundColor: Color(0xff404040),
           title: Text(
             'Intelliwiz',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
@@ -722,7 +725,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
                                 ),
                                   onTap: (){
                                       Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) => task_List(),
+                                          MaterialPageRoute(builder: (context) => Scan_qr(),
                                           )
                                       );
                                   }
@@ -795,6 +798,20 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
                                   ),
                                 ),
                               ),
+                                ListTile(
+                                    title: Text(
+                                        'Incident Report',
+                                        style: TextStyle(
+                                            color: Color(0xffffffff),
+                                        ),
+                                    ),
+                                    onTap: (){
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (context) => ShowIncidentDataPage(),
+                                            )
+                                        );
+                                    }
+                                ),
                             ],
                           ),
                         ),
@@ -892,7 +909,7 @@ class Sync_State extends State<Sync> with SingleTickerProviderStateMixin {
                                   /*highlightColor: Colors.pink,*/
                                   onPressed: () {
                                     Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => get_QuestionsTask(myObject: this.JobneedList[position].jobneedid.toString())));
+                                        MaterialPageRoute(builder: (context) => get_QuestionsTask(id: this.JobneedList[position].jobneedid.toString(),type: "TASK")));
                                   } ),
                               trailing: Icon(
                                 Icons.arrow_forward_ios,

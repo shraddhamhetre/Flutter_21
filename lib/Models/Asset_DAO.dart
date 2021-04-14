@@ -6,38 +6,38 @@ class Asset_DAO {
   String _enable;
   String _iscritical;
   String _gpslocation;
-  String _parent;
-  String _identifier;
-  String _runningstatus;
-  String _cuser;
-  String _muser;
+  int _parent;
+  int _identifier;
+  int _runningstatus;
+  int _cuser;
+  int _muser;
   String _cdtz;
   String _isdeleted;
   String _mdtz;
   String _syncStatus;
-  String _buid;
+  int _buid;
   String _loccode;
   String _locname;
-  String _type;
-  String _category;
-  String _subcategory;
-  String _brand;
-  String _model;
+  int _type;
+  int _category;
+  int _subcategory;
+  int _brand;
+  int _model;
   String _supplier;
   String _capacity;
-  String _unit;
+  int _unit;
   String _yom;
   String _msn;
   String _bdate;
   String _pdate;
   String _isdate;
   String _billval;
-  String _service;
+  int _service;
   String _Sservprov;
   String _servprovname;
   String _sfdate;
   String _stdate;
-  String _meter;
+  int _meter;
   String _qsetids;
   String _qsetname;
   String _tempcode;
@@ -139,38 +139,38 @@ class Asset_DAO {
   String get enable => _enable;
   String get iscritical => _iscritical;
   String get gpslocation => _gpslocation;
-  String get parent => _parent;
-  String get identifier => _identifier;
-  String get runningstatus => _runningstatus;
-  String get cuser => _cuser;
-  String get muser => _muser;
+  int get parent => _parent;
+  int get identifier => _identifier;
+  int get runningstatus => _runningstatus;
+  int get cuser => _cuser;
+  int get muser => _muser;
   String get cdtz => _cdtz;
   String get isdeleted => _isdeleted;
   String get mdtz => _mdtz;
   String get syncStatus => _syncStatus;
-  String get buid => _buid;
+  int get buid => _buid;
   String get loccode => _loccode;
   String get locname => _locname;
-  String get type => _type;
-  String get category => _category;
-  String get subcategory => _subcategory;
-  String get brand => _brand;
-  String get model => _model;
+  int get type => _type;
+  int get category => _category;
+  int get subcategory => _subcategory;
+  int get brand => _brand;
+  int get model => _model;
   String get supplier => _supplier;
   String get capacity => _capacity;
-  String get unit => _unit;
+  int get unit => _unit;
   String get yom => _yom;
   String get msn => _msn;
   String get bdate => _bdate;
   String get pdate => _pdate;
   String get isdate => _isdate;
   String get billval => _billval;
-  String get service => _service;
+  int get service => _service;
   String get Sservprov => _Sservprov;
   String get servprovname => _servprovname;
   String get sfdate => _sfdate;
   String get stdate => _stdate;
-  String get meter => _meter;
+  int get meter => _meter;
   String get qsetids => _qsetids;
   String get qsetname => _qsetname;
   String get tempcode => _tempcode;
@@ -200,23 +200,23 @@ class Asset_DAO {
     this._gpslocation = newgpslocation;
   }
 
-  set parent(String newparent) {
+  set parent(int newparent) {
     this._parent = newparent;
   }
 
-  set identifier(String newidentifier) {
+  set identifier(int newidentifier) {
     this._identifier = newidentifier;
   }
 
-  set runningstatus(String newrunningstatus) {
+  set runningstatus(int newrunningstatus) {
     this._runningstatus = newrunningstatus;
   }
 
-  set cuser(String newcuser) {
+  set cuser(int newcuser) {
     this._cuser = newcuser;
   }
 
-  set muser(String newmuser) {
+  set muser(int newmuser) {
     this._muser = newmuser;
   }
 
@@ -236,7 +236,7 @@ class Asset_DAO {
     this._syncStatus = newsyncStatus;
   }
 
-  set buid(String newbuid) {
+  set buid(int newbuid) {
     this._buid = newbuid;
   }
 
@@ -248,23 +248,23 @@ class Asset_DAO {
     this._locname = newlocname;
   }
 
-  set type(String newtype) {
+  set type(int newtype) {
     this._type = newtype;
   }
 
-  set category(String newcategory) {
+  set category(int newcategory) {
     this._category = newcategory;
   }
 
-  set subcategory(String newsubcategory) {
+  set subcategory(int newsubcategory) {
     this._subcategory = newsubcategory;
   }
 
-  set brand(String newbrand) {
+  set brand(int newbrand) {
     this._brand = newbrand;
   }
 
-  set model(String newmodel) {
+  set model(int newmodel) {
     this._model = newmodel;
   }
 
@@ -276,7 +276,7 @@ class Asset_DAO {
     this._capacity = newcapacity;
   }
 
-  set unit(String newunit) {
+  set unit(int newunit) {
     this._unit = newunit;
   }
 
@@ -304,7 +304,7 @@ class Asset_DAO {
     this._billval = newbillval;
   }
 
-  set service(String newservice) {
+  set service(int newservice) {
     this._service = newservice;
   }
 
@@ -324,7 +324,7 @@ class Asset_DAO {
     this._stdate = newstdate;
   }
 
-  set meter(String newmeter) {
+  set meter(int newmeter) {
     this._meter = newmeter;
   }
 

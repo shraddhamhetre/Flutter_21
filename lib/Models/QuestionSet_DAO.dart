@@ -9,6 +9,8 @@ class QuestionSet_DAO {
   String _cdtz;
   int _muser;
   String _mdtz;
+  int _type;
+  int _parent;
 
   QuestionSet_DAO(
       this._questionsetid,
@@ -19,7 +21,9 @@ class QuestionSet_DAO {
       this._cuser,
       this._cdtz,
       this._muser,
-      this._mdtz);
+      this._mdtz,
+      this._type,
+      this._parent);
 
   QuestionSet_DAO.withId(
       this._id,
@@ -31,7 +35,9 @@ class QuestionSet_DAO {
       this._cuser,
       this._cdtz,
       this._muser,
-      this._mdtz);
+      this._mdtz,
+      this._type,
+      this._parent);
 
   int get id => _id;
   int get questionsetid => _questionsetid;
@@ -43,6 +49,8 @@ class QuestionSet_DAO {
   String get cdtz => _cdtz;
   int get muser => _muser;
   String get mdtz => _mdtz;
+  int get type => _type;
+  int get parent => _parent;
 
   set questionsetid(int newquestionsetid) {
     this._questionsetid = newquestionsetid;
@@ -80,6 +88,14 @@ class QuestionSet_DAO {
     this._mdtz = newmdtz;
   }
 
+  set type (int newtype){
+    this._type = newtype;
+  }
+
+  set parent (int newparent){
+    this._parent = newparent;
+  }
+
   // Convert a Note   object into a Map object
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
@@ -95,6 +111,8 @@ class QuestionSet_DAO {
     map['cdtz'] = _cdtz;
     map['muser'] = _muser;
     map['mdtz'] = _mdtz;
+    map['type'] = _type;
+    map['parent'] = _parent;
     return map;
   }
 
@@ -110,5 +128,8 @@ class QuestionSet_DAO {
     this._cdtz = map['cdtz'];
     this._muser = map['muser'];
     this._mdtz = map['mdtz'];
+    this._type = map['type'];
+    this._parent = map['parent'];
+
   }
 }

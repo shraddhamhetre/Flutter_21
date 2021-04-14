@@ -107,8 +107,10 @@ Future UploadPELOGData(String pelogid)async{
 
 
             print("@@@@body=" + uploadParameter.toJson().toString());
+            Uri url= GlobalVariable().getServerUrl() as Uri;
+
             http.Response response = await http.post(
-                Uri.encodeFull(GlobalVariable().getServerUrl()),
+                url,
                 headers:
                 {
                     "Accept": "application/json",

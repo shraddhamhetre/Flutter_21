@@ -171,4 +171,23 @@ class Jobneeddetails_DAO {
     this._muser = map['muser'];
     this._ismandatory = map['ismandatory'];
   }
+  toJson() {
+    return {
+      "jndid": jndid,
+      "jobneedid": jobneedid,
+      "seqno": seqno,
+      "questionid": questionid,
+      "answer": answer,
+      "min": min,
+      "max": max,
+      "option": option,
+      "alerton": alerton,
+      "type": type,
+      "cdtz": cdtz,
+      "mdtz": mdtz,
+      "cuser": cuser,
+      "muser": muser,
+      "ismandatory": ismandatory
+    };
+  }
 }

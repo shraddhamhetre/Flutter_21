@@ -40,6 +40,9 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
+    configurations {
+        compile.exclude group: 'com.google.zxing'
+    }
 
     buildTypes {
         release {

@@ -42,10 +42,7 @@ Future UploadTourTask1(String jobneedid)async{
             jndDetails.add(jndData.toJson());
         }
         return jndDetails;
-
     }
-
-
 
     if(jobneedlist.length == 0 ){
         print(" All data is syncd");
@@ -106,14 +103,16 @@ Future UploadTourTask1(String jobneedid)async{
                 prefs.get('deviceid')
             );
 
-
             print("@@@@@Uploadjobneed[i].toJson().toString(): " +
                 uploaddataList[i].toJson().toString());
 
 
             print("@@@@body=" + uploadParameter.toJson().toString());
+            Uri url= GlobalVariable().getServerUrl() as Uri;
+
+
             http.Response response = await http.post(
-                Uri.encodeFull(GlobalVariable().getServerUrl()),
+                url,
                 headers:
                 {
                     "Accept": "application/json",
@@ -124,11 +123,6 @@ Future UploadTourTask1(String jobneedid)async{
             );
             print("response.body=== " + response.body);
         }
-
-
     }
-
-
-
     //UploadSelfAttendance();
 }

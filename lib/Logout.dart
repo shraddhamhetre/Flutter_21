@@ -41,8 +41,11 @@ class Logout extends StatelessWidget {
       'story': userData.story,
     };
 
+
+    var url = Uri.parse(GlobalVariable().getServerUrl());
+
     http.Response response = await http.post(
-      Uri.encodeFull(GlobalVariable().getServerUrl()),
+      url,
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/x-www-form-urlencoded"

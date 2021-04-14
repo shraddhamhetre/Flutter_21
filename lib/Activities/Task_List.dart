@@ -1,12 +1,17 @@
+import 'dart:core';
+
 import 'package:draggable_floating_button/draggable_floating_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intelliwiz21/Activities/Question_List.dart';
 import 'package:intelliwiz21/Global/Common_Function.dart';
+import 'package:intelliwiz21/Global/Database.dart';
 import 'package:intelliwiz21/Models/Jobneed_DAO.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import 'Camera_Activity.dart';
+import 'Scan_qr.dart';
+final dbHelper = DatabaseHelper.instance;
 
 
 class task_List extends StatefulWidget {
@@ -21,7 +26,7 @@ class _task_List extends State<task_List> {
     checkJobStarted(String StartTime, String EndTime){
         String check =IsJobStarts(StartTime, EndTime);
         print("checkJobStarted called : ");
-        switch (check) {
+        switch ("0") {
             case '0':
                 return print("Start job");
                 break;
@@ -62,13 +67,13 @@ class _task_List extends State<task_List> {
         body: Stack(children: <Widget>[
             DraggableFloatingActionButton(
                 data: 'dfab_demo',
-                offset: new Offset(250, 450),
+                offset: new Offset(250, 350),
                 backgroundColor: Colors.grey,
                 child: new Icon(
-                    Icons.add,
+                    Icons.check,
                     color: Colors.black87,
                 ),
-                onPressed: () => print('pressed'),
+                onPressed: ()=> print("test"),
                 appContext: context,),
 
             Container(
@@ -105,7 +110,7 @@ class _task_List extends State<task_List> {
                                             /*highlightColor: Colors.pink,*/
                                             onPressed: () {
                                                 Navigator.push(context,
-                                                    MaterialPageRoute(builder: (context) => get_QuestionsTask(myObject: this.JobneedList[position].jobneedid.toString())));
+                                                    MaterialPageRoute(builder: (context) => get_QuestionsTask(id: this.JobneedList[position].jobneedid.toString(),type: "TASK")));
                                             } ),
                                         trailing: Icon(
                                             Icons.arrow_forward_ios,

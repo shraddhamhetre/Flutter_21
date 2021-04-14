@@ -8,6 +8,8 @@ class QuestionSetBelonging_Table {
     final String QUESTIONSETBELONGING_SEQNO = "seqno";
     final String QUESTIONSETBELONGING_QUESTIONSETID = "questionsetid";
     final String QUESTIONSETBELONGING_QUESTIONID = "questionid";
+    final String QUESTIONSETBELONGING_QUESTIONNAME = "questionname";
+    final String QUESTIONSETBELONGING_QUESTIONSETNAME = "qsetname";
     final String QUESTIONSETBELONGING_CDTZ = "cdtz";
     final String QUESTIONSETBELONGING_MDTZ = "mdtz";
     // final String QUESTIONSETBELONGING_ISDELETED="isdeleted";
@@ -28,6 +30,8 @@ class QuestionSetBelonging_Table {
         await db.execute('''
           CREATE TABLE $TABLE_NAME (
             $QUESTIONSETBELONGING_ID INTEGER NOT NULL,
+            $QUESTIONSETBELONGING_QUESTIONNAME TEXT NOT NULL,
+            $QUESTIONSETBELONGING_QUESTIONSETNAME TEXT NOT NULL,
             $QUESTIONSETBELONGING_ISMANDATORY TEXT NOT NULL,
             $QUESTIONSETBELONGING_SEQNO INTEGER NOT NULL,
             $QUESTIONSETBELONGING_CDTZ TEXT NOT NULL,

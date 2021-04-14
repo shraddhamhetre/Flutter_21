@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -256,14 +257,25 @@ class HomePageState extends State<HomePage> {
     print(
         "GlobalVariable().getServerUrl(): " + GlobalVariable().getServerUrl());
 
+    var url = Uri.parse(GlobalVariable().getServerUrl());
+
     http.Response response = await http.post(
-      Uri.encodeFull(GlobalVariable().getServerUrl()),
+      url,
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: body,
     );
+
+    /*http.Response response = await http.post(
+      Uri.encodeFull(url),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: body,
+    );*/
     print("response.body" + response.body);
     Map decoded = json.decode(response.body);
 
